@@ -43,24 +43,24 @@ struct telefon
 };
 
 // Iteracyjna funkcja drukująca zawartość listy
-void drukuj_liste_it(telefon *adres)
+void drukuj_liste_it(telefon *adres_do_drukowania)
 {
 
 	cout << "\nOto wydrukowana lista:\n";
-	while (adres != NULL)
+	while (adres_do_drukowania != NULL)
 	{
 		// wypisujemy zawartość elementu
-		cout << (*adres).marka << " ";
-		cout << (*adres).model << " ";
-		cout << (*adres).cena << " ";
+		cout << (*adres_do_drukowania).marka << " ";
+		cout << (*adres_do_drukowania).model << " ";
+		cout << (*adres_do_drukowania).cena << " ";
 		// i przechodzimy do następnego
-		adres = adres->wsk_nastepnika;
+		adres_do_drukowania = adres_do_drukowania->wsk_nastepnika;
 	}
 	cout << "\nKoniec listy\n\n";
 
 };
 
-telefon *odwrotne_wczytywanie(telefon *poczatek, string marka, int cena)
+telefon *wczytaj_na_liste(telefon *poczatek, string marka,string model, int cena)
 {
 	telefon * glowa = NULL;
 	telefon * nowy = new telefon;
@@ -69,6 +69,7 @@ telefon *odwrotne_wczytywanie(telefon *poczatek, string marka, int cena)
 	{
 		nowy->marka = marka;
 		nowy->cena = cena;
+		nowy->model = model;
 		nowy->wsk_nastepnika = NULL;
 		glowa = nowy;
 		*poczatek = *glowa;
@@ -77,6 +78,7 @@ telefon *odwrotne_wczytywanie(telefon *poczatek, string marka, int cena)
 	{
 		nowy->marka = marka;
 		nowy->cena = cena;
+		nowy->model = model;
 		nowy->wsk_nastepnika = poczatek;
 		poczatek = nowy;
 	}
@@ -201,7 +203,7 @@ string nazwapliku = "dane.txt";//do testow
 		
 		plik >> plik_marka >>plik_model>> plik_cena;
 		//cout << "marka to :" << plik_marka << " cena to: " << plik_temp<<endl;//to do testow
-		nowalista = odwrotne_wczytywanie(nowalista, plik_marka, plik_cena);
+		nowalista = wczytaj_na_liste(nowalista, plik_marka, plik_model, plik_cena);
 		ile_telefonow_w_pliku++;
 	}
 	plik.close();
@@ -209,8 +211,8 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
-		dopisz_przedostatni(nowalista);//podpunkt 3
-		drukuj_liste_it(nowalista);
+		//dopisz_przedostatni(nowalista);//podpunkt 3
+		//drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 4
 	}
 	else
