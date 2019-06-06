@@ -88,7 +88,7 @@ telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string mode
 
 int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_ciag, string ciag, string dopisana_marka, string dopisany_model, float dopisana_cena,float jakas_cena )
 {
-	telefon *start = adres_do_pierwszej_funkcji;
+	
 	telefon * ostatni = adres_do_pierwszej_funkcji;
 	telefon *sprawdzenie_unikalnosci_marki = adres_do_pierwszej_funkcji;
 	telefon *wewnetrzne_porownanie = adres_do_pierwszej_funkcji;
@@ -127,8 +127,10 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 				ostatni = ostatni->wsk_nastepnika;
 			}
 			ostatni->wsk_nastepnika = dopisany;
+			ile_jest_na_liscie++;
 		}
-		adres_do_pierwszej_funkcji = ostatni;
+		adres_do_pierwszej_funkcji = ostatni;//tu jest blad bo przypisuje do tego element listy
+		telefon *start = adres_do_pierwszej_funkcji;
 		string ita_marka;
 		string jta_marka;
 		bool czy_unikalna=true;
@@ -140,12 +142,13 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 			{
 				if (j != i)//to by nie porownywac marki z samą sobą
 				{
-					jta_marka = wewnetrzne_porownanie->marka;
-					
-					if (ita_marka == jta_marka)//,porownoje i-tą marke z j-tą
+					jta_marka = wewnetrzne_porownanie->marka;		
+					if (ita_marka == jta_marka)//porownoje i-tą marke z j-tą
 					{
 						czy_unikalna = false;
 					}
+					if (wewnetrzne_porownanie->wsk_nastepnika != NULL)
+						wewnetrzne_porownanie = wewnetrzne_porownanie->wsk_nastepnika;
 				}
 			}
 			if (sprawdzenie_unikalnosci_marki->wsk_nastepnika!=NULL)
@@ -259,7 +262,7 @@ int main()
 	/*cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
 	string nazwapliku;
 	cin >> nazwapliku;*/
-string nazwapliku = "danezle.txt";//do testow
+string nazwapliku = "dane.txt";//do testow
 	ifstream plik(nazwapliku);
 	if (!plik.is_open())
 	{
