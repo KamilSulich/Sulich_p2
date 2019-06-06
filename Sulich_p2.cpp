@@ -86,73 +86,97 @@ telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string mode
 	
 }
 
-void dopisz_przedostatni(telefon *adres)
+int pierwsza(telefon *adres_do_pierwszej_funkcji,int &ile_telefonow_zawiera_ciag,string ciag)
 {
-	string dopisany_marka;
-	int dopisana_temp;
-	telefon *kopia = adres;
-	telefon *start = adres;
-	int ile = 0;
-	while (kopia != NULL)
+	int ile_telefonow_ma_unikalna_marke = 0;
+	ile_telefonow_zawiera_ciag = 0;
+	string aktualnie_sprawdzana_marka;
+	size_t znalezionaPozycja;
+	
+	while (adres_do_pierwszej_funkcji != NULL)
 	{
-		ile++;
-		kopia = kopia->wsk_nastepnika;
-	}
-	if (ile == 1)
-	{
-		telefon * dopisany = new telefon;
+		
+		aktualnie_sprawdzana_marka = adres_do_pierwszej_funkcji->marka;
+		znalezionaPozycja = aktualnie_sprawdzana_marka.find(ciag);
 
-		cout << " wpisz nowy marka do dodania" << endl;
-		cin >> dopisany_marka;
-		cout << " wpisz jego temperature topienia" << endl;
-		cin >> dopisana_temp;
-		//dopisany_marka = "potas";//do testow
-		//dopisana_temp = 64;//do testow
-		dopisany->marka = dopisany_marka;
-		dopisany->cena = dopisana_temp;
-		/////
-
-		telefon * falszywy_ostatni = new telefon;
-		falszywy_ostatni->marka = adres->marka;
-		falszywy_ostatni->cena = adres->cena;
-		falszywy_ostatni->wsk_nastepnika = NULL;
-
-		dopisany->wsk_nastepnika = falszywy_ostatni;
-		*adres = *dopisany;
-	}
-
-	else if (ile > 1)
-	{	//cout << ile;//do testow;
-
-		for (int i = 1; i < ile - 1; i++)
+		if (znalezionaPozycja != std::string::npos)
 		{
-			adres = adres->wsk_nastepnika;
+			ile_telefonow_zawiera_ciag++;
 		}
-
-		//cout << adres->marka;//do testow;
-		telefon * dopisany = new telefon;
-		cout << " wpisz nowy marka do dodania" << endl;
-		cin >> dopisany_marka;
-		cout << " wpisz jego temperature topienia" << endl;
-		cin >> dopisana_temp;
-		//dopisany_marka = "potas";//do testow
-		//dopisana_temp = 64;//do testow
-		dopisany->marka = dopisany_marka;
-		dopisany->cena = dopisana_temp;
-		//dopisany->wsk_nastepnika = adres->wsk_nastepnika;//shallow copy
-		dopisany->wsk_nastepnika = new telefon(*adres->wsk_nastepnika);//deep copy
-		adres = start;
-		for (int i = 1; i < ile - 1; i++)
-		{
-			adres = adres->wsk_nastepnika;
-		}
-		adres->wsk_nastepnika = dopisany;
-
+		
+		adres_do_pierwszej_funkcji = adres_do_pierwszej_funkcji->wsk_nastepnika;
 	}
-	else
-		cout << "lista jest zbyt krotka, aby cos do niej dopisywac na przedostatnim miejscu ";
-	cout << "nastapilo dodanie markau na przedostatnim miejscu";
+	
+	return ile_telefonow_ma_unikalna_marke;
 }
+
+//void dopisz_przedostatni(telefon *adres)
+//{
+//	string dopisany_marka;
+//	int dopisana_temp;
+//	telefon *kopia = adres;
+//	telefon *start = adres;
+//	int ile = 0;
+//	while (kopia != NULL)
+//	{
+//		ile++;
+//		kopia = kopia->wsk_nastepnika;
+//	}
+//	if (ile == 1)
+//	{
+//		telefon * dopisany = new telefon;
+//
+//		cout << " wpisz nowy marka do dodania" << endl;
+//		cin >> dopisany_marka;
+//		cout << " wpisz jego temperature topienia" << endl;
+//		cin >> dopisana_temp;
+//		//dopisany_marka = "potas";//do testow
+//		//dopisana_temp = 64;//do testow
+//		dopisany->marka = dopisany_marka;
+//		dopisany->cena = dopisana_temp;
+//		/////
+//
+//		telefon * falszywy_ostatni = new telefon;
+//		falszywy_ostatni->marka = adres->marka;
+//		falszywy_ostatni->cena = adres->cena;
+//		falszywy_ostatni->wsk_nastepnika = NULL;
+//
+//		dopisany->wsk_nastepnika = falszywy_ostatni;
+//		*adres = *dopisany;
+//	}
+//
+//	else if (ile > 1)
+//	{	//cout << ile;//do testow;
+//
+//		for (int i = 1; i < ile - 1; i++)
+//		{
+//			adres = adres->wsk_nastepnika;
+//		}
+//
+//		//cout << adres->marka;//do testow;
+//		telefon * dopisany = new telefon;
+//		cout << " wpisz nowy marka do dodania" << endl;
+//		cin >> dopisany_marka;
+//		cout << " wpisz jego temperature topienia" << endl;
+//		cin >> dopisana_temp;
+//		//dopisany_marka = "potas";//do testow
+//		//dopisana_temp = 64;//do testow
+//		dopisany->marka = dopisany_marka;
+//		dopisany->cena = dopisana_temp;
+//		//dopisany->wsk_nastepnika = adres->wsk_nastepnika;//shallow copy
+//		dopisany->wsk_nastepnika = new telefon(*adres->wsk_nastepnika);//deep copy
+//		adres = start;
+//		for (int i = 1; i < ile - 1; i++)
+//		{
+//			adres = adres->wsk_nastepnika;
+//		}
+//		adres->wsk_nastepnika = dopisany;
+//
+//	}
+//	else
+//		cout << "lista jest zbyt krotka, aby cos do niej dopisywac na przedostatnim miejscu ";
+//	cout << "nastapilo dodanie markau na przedostatnim miejscu";
+//}
 void skasuj_liste(telefon *lista_do_skasowania)
 {
 	telefon *aktualny;
@@ -212,8 +236,11 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
-		//dopisz_przedostatni(nowalista);//podpunkt 3
-		//drukuj_liste_it(nowalista);
+		string ciag_znakow = "Nok";
+		int ile_telefonow = 0;
+		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow) << " telefonow, z unikalna marka\n";
+		cout << "znaleziono " << ile_telefonow << " dopasowan do wzoru,,"<< ciag_znakow<<"''\n";
+		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 4
 	}
 	else
