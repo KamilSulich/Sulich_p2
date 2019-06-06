@@ -38,7 +38,7 @@ struct telefon
 {
 	string marka;
 	string model;
-	int cena;
+	float cena;
 	telefon *wsk_nastepnika;
 };
 
@@ -60,7 +60,7 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 
 };
 
-telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string model_przekazany, int cena_przekazana)
+telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string model_przekazany, float cena_przekazana)
 {
 	telefon * glowa = NULL;
 	telefon * nowy = new telefon;
@@ -86,13 +86,14 @@ telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string mode
 	
 }
 
-int pierwsza(telefon *adres_do_pierwszej_funkcji,int &ile_telefonow_zawiera_ciag,string ciag)
+int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_ciag, string ciag, string dopisana_marka, string dopisany_model, float dopisana_cena,float jakas_cena )
 {
+	telefon * ostatni = adres_do_pierwszej_funkcji;
 	int ile_telefonow_ma_unikalna_marke = 0;
 	ile_telefonow_zawiera_ciag = 0;
 	string aktualnie_sprawdzana_marka;
 	size_t znalezionaPozycja;
-	
+	bool czy_jest_tanszy=false;
 	while (adres_do_pierwszej_funkcji != NULL)
 	{
 		
@@ -103,10 +104,27 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji,int &ile_telefonow_zawiera_ciag
 		{
 			ile_telefonow_zawiera_ciag++;
 		}
-		
+		if (adres_do_pierwszej_funkcji->cena < jakas_cena)
+			czy_jest_tanszy = true;
 		adres_do_pierwszej_funkcji = adres_do_pierwszej_funkcji->wsk_nastepnika;
 	}
 	
+		telefon * dopisany = new telefon;
+		dopisany->marka = dopisana_marka;
+		dopisany->model = dopisany_model;
+		dopisany->cena = dopisana_cena;
+		dopisany->wsk_nastepnika = NULL;
+
+	
+		if (czy_jest_tanszy == false)
+		{
+			while (ostatni->wsk_nastepnika != NULL)
+			{
+				ostatni = ostatni->wsk_nastepnika;
+			}
+			ostatni->wsk_nastepnika = dopisany;
+		}
+		adres_do_pierwszej_funkcji = ostatni;
 	return ile_telefonow_ma_unikalna_marke;
 }
 
@@ -238,7 +256,7 @@ string nazwapliku = "dane.txt";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
 		int ile_telefonow = 0;
-		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow) << " telefonow, z unikalna marka\n";
+		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow,"Fizyka","Dwa_kubki_polaczane_sznurkiem",0,20) << " telefonow, z unikalna marka\n";
 		cout << "znaleziono " << ile_telefonow << " dopasowan do wzoru,,"<< ciag_znakow<<"''\n";
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 4
