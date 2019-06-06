@@ -60,29 +60,30 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 
 };
 
-telefon *wczytaj_na_liste(telefon *poczatek, string marka,string model, int cena)
+telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string model_przekazany, int cena_przekazana)
 {
 	telefon * glowa = NULL;
 	telefon * nowy = new telefon;
-
+	telefon * ostatni = poczatek;
+	nowy->marka = marka_przekazana;
+	nowy->cena = cena_przekazana;
+	nowy->model = model_przekazany;
 	if (poczatek->cena == NULL)//ten warunek sprawdza, czy mamy do czynienia z pierwszym elementem listy
-	{
-		nowy->marka = marka;
-		nowy->cena = cena;
-		nowy->model = model;
+	{	
 		nowy->wsk_nastepnika = NULL;
 		glowa = nowy;
 		*poczatek = *glowa;
+		return glowa;
 	}
 	else
-	{
-		nowy->marka = marka;
-		nowy->cena = cena;
-		nowy->model = model;
-		nowy->wsk_nastepnika = poczatek;
-		poczatek = nowy;
+	{	
+		while (ostatni->wsk_nastepnika != NULL)
+			ostatni = ostatni->wsk_nastepnika;
+	    ostatni->wsk_nastepnika=nowy;
+		nowy->wsk_nastepnika = NULL;	
+		return poczatek;
 	}
-	return nowy;
+	
 }
 
 void dopisz_przedostatni(telefon *adres)
@@ -202,7 +203,7 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		
 		plik >> plik_marka >>plik_model>> plik_cena;
-		//cout << "marka to :" << plik_marka << " cena to: " << plik_temp<<endl;//to do testow
+		cout << "marka to :" << plik_marka <<" Model to "<<plik_model<<" cena to: " << plik_cena <<endl;//to do testow
 		nowalista = wczytaj_na_liste(nowalista, plik_marka, plik_model, plik_cena);
 		ile_telefonow_w_pliku++;
 	}
