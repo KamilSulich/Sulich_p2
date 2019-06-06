@@ -88,17 +88,21 @@ telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string mode
 
 int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_ciag, string ciag, string dopisana_marka, string dopisany_model, float dopisana_cena,float jakas_cena )
 {
+	telefon *start = adres_do_pierwszej_funkcji;
 	telefon * ostatni = adres_do_pierwszej_funkcji;
+	telefon *sprawdzenie_unikalnosci_marki = adres_do_pierwszej_funkcji;
+	telefon *wewnetrzne_porownanie = adres_do_pierwszej_funkcji;
 	int ile_telefonow_ma_unikalna_marke = 0;
 	ile_telefonow_zawiera_ciag = 0;
-	string aktualnie_sprawdzana_marka;
+	string marka_ciag;
 	size_t znalezionaPozycja;
 	bool czy_jest_tanszy=false;
+	int ile_jest_na_liscie = 0;
 	while (adres_do_pierwszej_funkcji != NULL)
 	{
-		
-		aktualnie_sprawdzana_marka = adres_do_pierwszej_funkcji->marka;
-		znalezionaPozycja = aktualnie_sprawdzana_marka.find(ciag);
+		ile_jest_na_liscie++;
+		marka_ciag = adres_do_pierwszej_funkcji->marka;
+		znalezionaPozycja = marka_ciag.find(ciag);
 
 		if (znalezionaPozycja != std::string::npos)
 		{
@@ -115,7 +119,7 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 		dopisany->cena = dopisana_cena;
 		dopisany->wsk_nastepnika = NULL;
 
-	
+		
 		if (czy_jest_tanszy == false)
 		{
 			while (ostatni->wsk_nastepnika != NULL)
@@ -125,6 +129,31 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 			ostatni->wsk_nastepnika = dopisany;
 		}
 		adres_do_pierwszej_funkcji = ostatni;
+		string ita_marka;
+		string jta_marka;
+		bool czy_unikalna=true;
+		for (int i = 0; i < ile_jest_na_liscie; i++)// rozkazuje kazdemu elementowi porownac sie z innymi
+		{
+			czy_unikalna = true;
+			ita_marka = sprawdzenie_unikalnosci_marki->marka;
+			for (int j = 0; j < ile_jest_na_liscie; j++)//ile_jest_na_liscie-1 zeby nie sprawdzac ostatniego z elementem na ktory wskaze jego wsk_nastepnika, bo bedziemy powowywac z nullem
+			{
+				if (j != i)//to by nie porownywac marki z samą sobą
+				{
+					jta_marka = wewnetrzne_porownanie->marka;
+					
+					if (ita_marka == jta_marka)//,porownoje i-tą marke z j-tą
+					{
+						czy_unikalna = false;
+					}
+				}
+			}
+			if (sprawdzenie_unikalnosci_marki->wsk_nastepnika!=NULL)
+			sprawdzenie_unikalnosci_marki = sprawdzenie_unikalnosci_marki->wsk_nastepnika;
+			wewnetrzne_porownanie = start;
+			if (czy_unikalna)
+				ile_telefonow_ma_unikalna_marke++;
+		}
 	return ile_telefonow_ma_unikalna_marke;
 }
 
@@ -230,7 +259,7 @@ int main()
 	/*cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
 	string nazwapliku;
 	cin >> nazwapliku;*/
-string nazwapliku = "dane.txt";//do testow
+string nazwapliku = "danezle.txt";//do testow
 	ifstream plik(nazwapliku);
 	if (!plik.is_open())
 	{
