@@ -50,9 +50,9 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 	while (adres_do_drukowania != NULL)
 	{
 		// wypisujemy zawartość elementu
-		cout << (*adres_do_drukowania).marka << " ";
+		//cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
 		cout << (*adres_do_drukowania).model << " ";
-		cout << (*adres_do_drukowania).cena << " ";
+		//cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
 		//cout << "\n";
 		// i przechodzimy do następnego
 		adres_do_drukowania = adres_do_drukowania->wsk_nastepnika;
@@ -168,6 +168,7 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 	telefon *najmniej_liter = adres_do_drugiej_funkcji;
 	telefon *zamieniona_lista = adres_do_drugiej_funkcji;
 	telefon *lista_podpunkt_pierwszy = adres_do_drugiej_funkcji;
+	telefon *nastepny_po_najmniejliterowym = adres_do_drugiej_funkcji;
 	int ktory_najdrozszy = 0;
 	int ktory_ma_najmniej_liter = 0;
 	int ktora_iteracja = 0;
@@ -187,32 +188,40 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 		szukanie_najdrozszego = szukanie_najdrozszego->wsk_nastepnika;
 	}
 	//krok numer 1
-	for (int i = 1; i < ktory_najdrozszy-1; i++)
+	for (int i = 1; i < ktory_najdrozszy-1; i++)//przewiniecie do najdrozszego elementu
 	{
 		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
 	}
-	if (ktory_ma_najmniej_liter == ktora_iteracja)//moze to byc szczegolny przypadek, do sprawdzenia pozniej
-	{
-		cout << "najmiej liter ma ostatni element na lsicie";
-	}
+	//if (ktory_ma_najmniej_liter == ktora_iteracja)//moze to byc szczegolny przypadek, do sprawdzenia pozniej
+	//{
+	//	cout << "najmiej liter ma ostatni element na lsicie";
+	//}
 	lista_podpunkt_pierwszy->wsk_nastepnika = lista_podpunkt_pierwszy->wsk_nastepnika->wsk_nastepnika;
 	//dzieki powyzszej linijce,w tym momencie element poprzedzajacy najdrozszy telefon, wskazuje na następny za najdroższym
 	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
-	//krok 2
-	for (int i = 1; i < ktory_ma_najmniej_liter; i++)
+	for (int i = 1; i < ktory_ma_najmniej_liter; i++)//teraz jestesmy w elemencie majacym najmniej liter
 	{
 		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
 	}
-	lista_podpunkt_pierwszy->wsk_nastepnika = najdrozszy;//teraz 
+	nastepny_po_najmniejliterowym = lista_podpunkt_pierwszy->wsk_nastepnika;//teraz znalazlem i oznaczylem ten element ktory jest nastepny po najmniejliterowym 
+	
+	//krok 2
 	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	for (int i = 1; i < ktory_ma_najmniej_liter; i++)//teraz jestesmy w elemencie majacym najmniej liter
+	{
+		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
+	}
+	lista_podpunkt_pierwszy->wsk_nastepnika = najdrozszy;//teraz ten z najkrotsza nazwa modelu wskazuje na najdrozszy
+	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	cout << "nastepny_po_najmniejliterowym";//do testow
+	drukuj_liste_it(nastepny_po_najmniejliterowym);//do testow
 	//krok 3
 	//for (int i = 1; i < ktory_ma_najmniej_liter+1; i++)//przewiniecie listy do elementu ktory jest po najtanszym,
 	//	//czyli juz poprawnie umieszczonego najdrozszego;
 	//{
 	//	lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
 	//}
-	cout <<"lista po pierwszym punkcie";//do testow
-	drukuj_liste_it(lista_podpunkt_pierwszy);//do testow
+	
 	//cout << "\ndruk od najdrozszego, ma on numer :"<<ktory_najdrozszy<<"\n";//do testow
 	//drukuj_liste_it(najdrozszy);//do testow
 	//cout << "\ndruk od najmniejliter, ma on numer :" << ktory_ma_najmniej_liter << "\n";//do testow
