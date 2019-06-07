@@ -88,7 +88,7 @@ telefon *wczytaj_na_liste(telefon *poczatek, string marka_przekazana,string mode
 
 int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_ciag, string ciag, string dopisana_marka, string dopisany_model, float dopisana_cena,float jakas_cena )
 {
-	
+	telefon *sprawdzenie_ciagu = adres_do_pierwszej_funkcji;
 	telefon * ostatni = adres_do_pierwszej_funkcji;
 	telefon *sprawdzenie_unikalnosci_marki = adres_do_pierwszej_funkcji;
 	telefon *wewnetrzne_porownanie = adres_do_pierwszej_funkcji;
@@ -98,19 +98,19 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 	size_t znalezionaPozycja;
 	bool czy_jest_tanszy=false;
 	int ile_jest_na_liscie = 0;
-	while (adres_do_pierwszej_funkcji != NULL)
+	while (sprawdzenie_ciagu != NULL)
 	{
 		ile_jest_na_liscie++;
-		marka_ciag = adres_do_pierwszej_funkcji->marka;
+		marka_ciag = sprawdzenie_ciagu->marka;
 		znalezionaPozycja = marka_ciag.find(ciag);
 
 		if (znalezionaPozycja != std::string::npos)
 		{
 			ile_telefonow_zawiera_ciag++;
 		}
-		if (adres_do_pierwszej_funkcji->cena < jakas_cena)
+		if (sprawdzenie_ciagu->cena < jakas_cena)
 			czy_jest_tanszy = true;
-		adres_do_pierwszej_funkcji = adres_do_pierwszej_funkcji->wsk_nastepnika;
+		sprawdzenie_ciagu = sprawdzenie_ciagu->wsk_nastepnika;
 	}
 	
 		telefon * dopisany = new telefon;
@@ -286,7 +286,7 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
-		string ciag_znakow = "Nok";
+		string ciag_znakow = "Nokia";
 		int ile_telefonow = 0;
 		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow,"Fizyka","Dwa_kubki_polaczane_sznurkiem",0,20) << " telefonow, z unikalna marka\n";
 		cout << "znaleziono " << ile_telefonow << " dopasowan do wzoru,,"<< ciag_znakow<<"''\n";
