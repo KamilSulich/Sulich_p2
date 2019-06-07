@@ -237,31 +237,36 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
 	if (ile_elementow_usunac > ktora_iteracja-1)
-		cout << "Blad, w drugim argumencie funckji wpisano liczbe wieksza niz ilosc telefonow na liscie";
+		cout << "Blad, w drugim argumencie funkcji drugiej wpisano liczbe wieksza niz ilosc telefonow na liscie";
 	else
 	{
+		/////////////////////////////////////////////////
 		telefon*lista_po_usunieciu = poczatek;
 		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
 			lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
 		}
-		
+		/////////////////////////////////////////////////
+
 	
-		for (int i = 0; i < ile_elementow_usunac-1; i++)//tyle razy bedziemy wybierac element do usuniecia;
+		for (int ile_zostalo_do_usuniecia = ile_elementow_usunac; ile_zostalo_do_usuniecia > 0; ile_zostalo_do_usuniecia--)
 		{
-			lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
-		}
-			tmp = lista_podpunkt_drugi;	
-			cout << "druk tmp:";
-			drukuj_liste_it(tmp);
+			for (int j = 0; j < ile_zostalo_do_usuniecia - 1; j++)//przesuwam sie do emenetu ktory cche usunac
+			{
+				lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
+			}
+			tmp = lista_podpunkt_drugi;
+			tmp->wsk_nastepnika = NULL;
+			tmp = NULL;
 			delete tmp;
-			lista_podpunkt_drugi = lista_podpunkt_pierwszy;//powrot na pierwszy eleemnt listy
+			lista_podpunkt_drugi = poczatek;
+		}
 
-
-			*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym/
+		/////////////////////////////////////////////////
+		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym
 	}
-	bool czy_prawda = true;
-	return czy_prawda;
+	//bool czy_prawda = true;
+	return true;
 }
 //void dopisz_przedostatni(telefon *adres)
 //{
