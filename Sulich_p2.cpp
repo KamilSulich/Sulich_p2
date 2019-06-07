@@ -160,7 +160,7 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 		}
 	return ile_telefonow_ma_unikalna_marke;
 }
-bool druga(telefon *adres_do_drugiej_funkcji)
+bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jakas_marka, string jakis_model)
 {
 	telefon *poczatek = adres_do_drugiej_funkcji;
 	telefon *szukanie_najdrozszego = adres_do_drugiej_funkcji;
@@ -168,7 +168,9 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 	telefon *najmniej_liter = adres_do_drugiej_funkcji;
 	telefon *zamieniona_lista = adres_do_drugiej_funkcji;
 	telefon *lista_podpunkt_pierwszy = adres_do_drugiej_funkcji;
+	telefon *lista_podpunkt_drugi = adres_do_drugiej_funkcji;
 	telefon *nastepny_po_najmniejliterowym = adres_do_drugiej_funkcji;
+	float mediana = 0;
 	int ktory_najdrozszy = 0;
 	int ktory_ma_najmniej_liter = 0;
 	int ktora_iteracja = 0;
@@ -213,8 +215,8 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 	}
 	lista_podpunkt_pierwszy->wsk_nastepnika = najdrozszy;//teraz ten z najkrotsza nazwa modelu wskazuje na najdrozszy
 	
-	cout << "nastepny_po_najmniejliterowym";//do testow
-	drukuj_liste_it(nastepny_po_najmniejliterowym);//do testow
+	//cout << "nastepny_po_najmniejliterowym";//do testow
+	//drukuj_liste_it(nastepny_po_najmniejliterowym);//do testow
 	//krok 3
 	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
 	for (int i = 1; i < ktory_ma_najmniej_liter+1; i++)//przewiniecie listy do elementu ktory jest po 
@@ -225,12 +227,36 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 	lista_podpunkt_pierwszy->wsk_nastepnika = nastepny_po_najmniejliterowym;//najdrozszy pokazuje teraz na element
 	//ktory wczesniej stal na jego miejscu//
 	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
-	cout << "lista_podpunkt_pierwszy";//do testow
-	drukuj_liste_it(lista_podpunkt_pierwszy);//do testow
+	//cout << "lista_podpunkt_pierwszy";//do testow
+	//drukuj_liste_it(lista_podpunkt_pierwszy);//do testow
 	//cout << "\ndruk od najdrozszego, ma on numer :"<<ktory_najdrozszy<<"\n";//do testow
 	//drukuj_liste_it(najdrozszy);//do testow
 	//cout << "\ndruk od najmniejliter, ma on numer :" << ktory_ma_najmniej_liter << "\n";//do testow
 	//drukuj_liste_it(najmniej_liter);//do testow
+	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
+	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
+	if (ile_elementow_usunac > ktora_iteracja-1)
+		cout << "Blad, w drugim argumencie funckji wpisano liczbe wieksza niz ilosc telefonow na liscie";
+	else
+	{
+		telefon*lista_po_usunieciu = poczatek;
+		for (int i = 0; i < ile_elementow_usunac; i++)
+		{
+			lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
+		}
+		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym/
+		//lista_podpunkt_drugi->wsk_nastepnika
+		telefon *tmp = lista_podpunkt_drugi;
+		ponizej jest wersja beta jak usuwac elementy, do przemyslenia i poprawienia, bo to trzeba bedzie fora w forze zrobic
+		//for (int i = 0; i < ile_elementow_usunac; i++)//tyle razy bedziemy wybierac element do usuniecia;
+		//{
+		//	lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
+		//	tmp = lista_podpunkt_drugi;
+		//	delete tmp;
+		//	lista_podpunkt_drugi = lista_podpunkt_pierwszy;
+		//}
+	}
+	
 	return false;
 }
 //void dopisz_przedostatni(telefon *adres)
@@ -326,7 +352,7 @@ void skasuj_liste(telefon *lista_do_skasowania)
 	};
 	lista_do_skasowania = NULL;
 	cout << "Skasowano liste";
-	drukuj_liste_it(lista_do_skasowania);// podpunkt 5
+	drukuj_liste_it(lista_do_skasowania);// podpunkt 6
 }
 int main()
 {
@@ -351,21 +377,26 @@ string nazwapliku = "dane.txt";//do testow
 		
 		plik >> plik_marka >>plik_model>> plik_cena;
 		cout << "marka to :" << plik_marka <<" Model to "<<plik_model<<" cena to: " << plik_cena <<endl;//to do testow
-		nowalista = wczytaj_na_liste(nowalista, plik_marka, plik_model, plik_cena);
+		nowalista = wczytaj_na_liste(nowalista, plik_marka, plik_model, plik_cena);//podpunkt 1
 		ile_telefonow_w_pliku++;
 	}
 	plik.close();
 	if (plik_cena != NULL)
 	{
+		int ile_usunac = 4;
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
 		int ile_telefonow = 0;
-		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow,"Fizyka","Dwa_kubki_polaczane_sznurkiem",0,20) << " telefonow, z unikalna marka\n";
+		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow,"Fizyka","Dwa_kubki_polaczane_sznurkiem",0,20) << " telefonow, z unikalna marka\n";//podpunkt 3
 		cout << "znaleziono " << ile_telefonow << " dopasowan do wzoru,,"<< ciag_znakow<<"''\n";
+		cout << "lista po zrobieniu pierwszej funkcji wyglada nastepujaco:";
 		drukuj_liste_it(nowalista);
-		druga(nowalista);
-		skasuj_liste(nowalista);//podpunkt 4
+		
+		druga(nowalista, ile_usunac,"SuperDzynDzynPolska","stacjonarny");//podpunkt 4
+		cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+		drukuj_liste_it(nowalista);
+		skasuj_liste(nowalista);//podpunkt 5
 	}
 	else
 	{
