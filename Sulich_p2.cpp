@@ -170,6 +170,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	telefon *lista_podpunkt_pierwszy = adres_do_drugiej_funkcji;
 	telefon *lista_podpunkt_drugi = adres_do_drugiej_funkcji;
 	telefon *nastepny_po_najmniejliterowym = adres_do_drugiej_funkcji;
+	telefon *tmp = adres_do_drugiej_funkcji;
 	float mediana = 0;
 	int ktory_najdrozszy = 0;
 	int ktory_ma_najmniej_liter = 0;
@@ -244,20 +245,23 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		{
 			lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
 		}
-		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym/
-		//lista_podpunkt_drugi->wsk_nastepnika
-		telefon *tmp = lista_podpunkt_drugi;
-		ponizej jest wersja beta jak usuwac elementy, do przemyslenia i poprawienia, bo to trzeba bedzie fora w forze zrobic
-		//for (int i = 0; i < ile_elementow_usunac; i++)//tyle razy bedziemy wybierac element do usuniecia;
-		//{
-		//	lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
-		//	tmp = lista_podpunkt_drugi;
-		//	delete tmp;
-		//	lista_podpunkt_drugi = lista_podpunkt_pierwszy;
-		//}
-	}
+		
 	
-	return false;
+		for (int i = 0; i < ile_elementow_usunac-1; i++)//tyle razy bedziemy wybierac element do usuniecia;
+		{
+			lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
+		}
+			tmp = lista_podpunkt_drugi;	
+			cout << "druk tmp:";
+			drukuj_liste_it(tmp);
+			delete tmp;
+			lista_podpunkt_drugi = lista_podpunkt_pierwszy;//powrot na pierwszy eleemnt listy
+
+
+			*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym/
+	}
+	bool czy_prawda = true;
+	return czy_prawda;
 }
 //void dopisz_przedostatni(telefon *adres)
 //{
