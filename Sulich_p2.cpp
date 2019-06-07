@@ -212,16 +212,21 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
 	}
 	lista_podpunkt_pierwszy->wsk_nastepnika = najdrozszy;//teraz ten z najkrotsza nazwa modelu wskazuje na najdrozszy
-	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	
 	cout << "nastepny_po_najmniejliterowym";//do testow
 	drukuj_liste_it(nastepny_po_najmniejliterowym);//do testow
 	//krok 3
-	//for (int i = 1; i < ktory_ma_najmniej_liter+1; i++)//przewiniecie listy do elementu ktory jest po najtanszym,
-	//	//czyli juz poprawnie umieszczonego najdrozszego;
-	//{
-	//	lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
-	//}
-	
+	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	for (int i = 1; i < ktory_ma_najmniej_liter+1; i++)//przewiniecie listy do elementu ktory jest po 
+		//najmniejliterowym, czyli juz poprawnie umieszczonego najdrozszego;
+	{
+		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
+	}
+	lista_podpunkt_pierwszy->wsk_nastepnika = nastepny_po_najmniejliterowym;//najdrozszy pokazuje teraz na element
+	//ktory wczesniej stal na jego miejscu//
+	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	cout << "lista_podpunkt_pierwszy";//do testow
+	drukuj_liste_it(lista_podpunkt_pierwszy);//do testow
 	//cout << "\ndruk od najdrozszego, ma on numer :"<<ktory_najdrozszy<<"\n";//do testow
 	//drukuj_liste_it(najdrozszy);//do testow
 	//cout << "\ndruk od najmniejliter, ma on numer :" << ktory_ma_najmniej_liter << "\n";//do testow
