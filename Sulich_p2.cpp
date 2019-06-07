@@ -53,6 +53,7 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 		cout << (*adres_do_drukowania).marka << " ";
 		cout << (*adres_do_drukowania).model << " ";
 		cout << (*adres_do_drukowania).cena << " ";
+		//cout << "\n";
 		// i przechodzimy do następnego
 		adres_do_drukowania = adres_do_drukowania->wsk_nastepnika;
 	}
@@ -159,8 +160,26 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 		}
 	return ile_telefonow_ma_unikalna_marke;
 }
-bool druga()
+bool druga(telefon *adres_do_drugiej_funkcji)
 {
+	telefon *poczatek = adres_do_drugiej_funkcji;
+	telefon *szukanie_najdrozszego = adres_do_drugiej_funkcji;
+	telefon *najdrozszy = adres_do_drugiej_funkcji;
+	telefon *najmniej_liter = adres_do_drugiej_funkcji;
+	telefon *zamieniona_lista = adres_do_drugiej_funkcji;
+	while (szukanie_najdrozszego->wsk_nastepnika != NULL)
+	{
+		if (szukanie_najdrozszego->cena > najdrozszy->cena)
+			najdrozszy = szukanie_najdrozszego;
+		if (szukanie_najdrozszego->model.length() < najmniej_liter->model.length())
+			najmniej_liter = szukanie_najdrozszego;
+		szukanie_najdrozszego = szukanie_najdrozszego->wsk_nastepnika;
+	}
+
+	cout << "\ndruk od najdrozszego: \n";//do testow
+	drukuj_liste_it(najdrozszy);//do testow
+	cout << "\ndruk od najmniejliter: \n";//do testow
+	drukuj_liste_it(najmniej_liter);//do testow
 	return false;
 }
 //void dopisz_przedostatni(telefon *adres)
@@ -294,6 +313,7 @@ string nazwapliku = "dane.txt";//do testow
 		cout << "na liscie jest " << pierwsza(nowalista, ile_telefonow,ciag_znakow,"Fizyka","Dwa_kubki_polaczane_sznurkiem",0,20) << " telefonow, z unikalna marka\n";
 		cout << "znaleziono " << ile_telefonow << " dopasowan do wzoru,,"<< ciag_znakow<<"''\n";
 		drukuj_liste_it(nowalista);
+		druga(nowalista);
 		skasuj_liste(nowalista);//podpunkt 4
 	}
 	else
