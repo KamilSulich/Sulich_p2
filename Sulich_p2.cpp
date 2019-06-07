@@ -52,7 +52,7 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 		// wypisujemy zawartość elementu
 		//cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
 		cout << (*adres_do_drukowania).model << " ";
-		//cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
+		cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
 		//cout << "\n";
 		// i przechodzimy do następnego
 		adres_do_drukowania = adres_do_drukowania->wsk_nastepnika;
@@ -282,28 +282,35 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		{
 			cout << usuniete_ceny[i]<<"\n";//do testow
 		}
-		int min = usuniete_ceny[0];
+		float min = usuniete_ceny[0];
 		int i_min = usuniete_ceny[0];;
-		int tmp= usuniete_ceny[0];
+		float tmp= usuniete_ceny[0];
 
-		for (int j = 0; j < ile_elementow_usunac; j++)
+		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
-			for (int i = 0; i < ile_elementow_usunac; i++)// w tej petli ustala sie minimum nieposortowanej tablicy
+			min = usuniete_ceny[i];
+			for (int j = i; j < ile_elementow_usunac; j++)// w tej petli ustala sie minimum nieposortowanej tablicy
 			{
-				if (usuniete_ceny[i] < min)
+				if (usuniete_ceny[j] < min)
 				{
-					min = usuniete_ceny[i];
-					i_min = i;
+					tmp = min;
+					min = usuniete_ceny[j];
+					usuniete_ceny[j] = tmp;
+					i_min = j;
 				}
 			}
-			posortowane_ceny[j] = min;
-			min = usuniete_ceny[0];
+			posortowane_ceny[i] = min;
+			
 		}
 		cout << "posortowane ceny wygladaja nastepujaco:\n";
 		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
 			cout << posortowane_ceny[i] << "\n";//do testow
 		}
+		if (ile_elementow_usunac % 2 == 1)
+			mediana = posortowane_ceny[ile_elementow_usunac / 2];
+		else
+			mediana = (posortowane_ceny[ile_elementow_usunac / 2]+ posortowane_ceny[ile_elementow_usunac / 2-1])/2;
 
 		nowy->marka = jakas_marka;
 		nowy->model = jakis_model;
