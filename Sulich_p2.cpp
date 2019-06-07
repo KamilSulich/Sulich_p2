@@ -159,7 +159,10 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 		}
 	return ile_telefonow_ma_unikalna_marke;
 }
-
+bool druga()
+{
+	return false;
+}
 //void dopisz_przedostatni(telefon *adres)
 //{
 //	string dopisany_marka;
