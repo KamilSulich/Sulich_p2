@@ -285,7 +285,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		int min = usuniete_ceny[0];
 		int i_min = usuniete_ceny[0];;
 		int tmp= usuniete_ceny[0];
-
+		float straznik = std::numeric_limits<float>::max();//ustawienie ,,straznika".
 		for (int j = 0; j < ile_elementow_usunac; j++)
 		{
 			for (int i = 0; i < ile_elementow_usunac; i++)// w tej petli ustala sie minimum nieposortowanej tablicy
@@ -298,6 +298,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			}
 			posortowane_ceny[j] = min;
 			min = usuniete_ceny[0];
+			usuniete_ceny[i_min] = straznik;
 		}
 		cout << "posortowane ceny wygladaja nastepujaco:\n";
 		for (int i = 0; i < ile_elementow_usunac; i++)
