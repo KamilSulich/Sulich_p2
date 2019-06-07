@@ -283,7 +283,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			cout << usuniete_ceny[i]<<"\n";//do testow
 		}
 		float min = usuniete_ceny[0];
-		int i_min = usuniete_ceny[0];;
+		float i_min = usuniete_ceny[0];;
 		float tmp= usuniete_ceny[0];
 
 		for (int i = 0; i < ile_elementow_usunac; i++)
@@ -322,33 +322,73 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		}
 		po_wpisaniu_mediany->wsk_nastepnika = nowy;
 	}
+	/////podpunkt 3
 	telefon *zamiana = poczatek;
 	int ile_telefonow_jest_w_trzecim_podpunkcie = 0;
 	telefon*najtanszy = new telefon;
-	najtanszy->cena = poczatek->cena;;
+	najtanszy->cena = poczatek->cena;
+	int ktory_telefon_jest_najtanszy = 0;
+	int potencjalnie_najtanszy_telefon = 0;
 	while (zamiana != NULL)
 	{
+		potencjalnie_najtanszy_telefon++;
 		if (zamiana->cena < najtanszy->cena)
 		{
 			najtanszy->cena = zamiana->cena;
 			najtanszy->marka = zamiana->marka;
 			najtanszy->model = zamiana->model;
 			najtanszy->wsk_nastepnika = zamiana->wsk_nastepnika;
+			ktory_telefon_jest_najtanszy = potencjalnie_najtanszy_telefon;
 		}
 		zamiana = zamiana->wsk_nastepnika;
 		ile_telefonow_jest_w_trzecim_podpunkcie++;
 	
 	}
-	zamiana = poczatek;
+	zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
 	bool czy_prawda = true;
 	if (kolejny_numer> ile_telefonow_jest_w_trzecim_podpunkcie)
 		czy_prawda = false;
 	//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
 	else
 	{
+		//krok 1
+		for (int i = 1; i < kolejny_numer; i++)
+		{
+			zamiana = zamiana->wsk_nastepnika;
+		}
+		telefon *kolejny_telefon = new telefon;
+		kolejny_telefon->cena = zamiana->cena;
+		kolejny_telefon->marka = zamiana->marka;
+		kolejny_telefon->model = zamiana->model;
+		kolejny_telefon->wsk_nastepnika = zamiana->wsk_nastepnika;
+		zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+		for (int i = 1; i < ktory_telefon_jest_najtanszy-1; i++)
+		{
+			zamiana = zamiana->wsk_nastepnika;
+		}
+		//cout << "zamiana->model" << zamiana->model;//do testow
+		zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
+		zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+		for (int i = 1; i < kolejny_numer-1; i++)
+		{
+			zamiana = zamiana->wsk_nastepnika;
+		}
+		zamiana->wsk_nastepnika = najtanszy;//wykonano drugi krok;
+		zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
 		
-
-
+		/////////////////nastepny_po_kolejnym to telefon ktory jest nastepny w kolejce, zaraz po kolejnym telefonie
+		telefon *nastepny_po_kolejnym = new telefon;
+		nastepny_po_kolejnym->cena = kolejny_telefon->wsk_nastepnika->cena;
+		nastepny_po_kolejnym->marka = kolejny_telefon->wsk_nastepnika->marka;
+		nastepny_po_kolejnym->model = kolejny_telefon->wsk_nastepnika->model;
+		nastepny_po_kolejnym->wsk_nastepnika = kolejny_telefon->wsk_nastepnika->wsk_nastepnika;
+		/////////////////
+		kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//wykonano krok 3
+		najtanszy->wsk_nastepnika = nastepny_po_kolejnym;//wykonano krok 4
+		//cout << "zamiana->model" << zamiana->model;//do testow
+	
+		
+		
 	}
 	
 	return czy_prawda;
@@ -462,7 +502,7 @@ string nazwapliku = "dane.txt";//do testow
 		cout << "plik nie zostal otwarty. Sprawdz czy dobrze podales jego nazwe. Pamietaj ze musisz podac nazwe wraz z rozszerzeniem.";
 		return 0;
 	}
-	int plik_cena = NULL;
+	float plik_cena = NULL;
 	string plik_marka;
 	string plik_model;
 	int ile_telefonow_w_pliku = 0;
@@ -478,7 +518,7 @@ string nazwapliku = "dane.txt";//do testow
 	if (plik_cena != NULL)
 	{
 		int ile_usunac = 2;
-		int kolejny_numer = 5;
+		int kolejny_numer = 2;
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
