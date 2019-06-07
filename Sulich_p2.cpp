@@ -160,7 +160,7 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 		}
 	return ile_telefonow_ma_unikalna_marke;
 }
-bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jakas_marka, string jakis_model)
+bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jakas_marka, string jakis_model,int kolejny_numer)
 {
 	telefon *poczatek = adres_do_drugiej_funkcji;
 	telefon *szukanie_najdrozszego = adres_do_drugiej_funkcji;
@@ -238,7 +238,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	//drukuj_liste_it(najmniej_liter);//do testow
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
-	if (ile_elementow_usunac > ktora_iteracja-1)
+	if (ile_elementow_usunac > ktora_iteracja)
 		cout << "Blad, w drugim argumencie funkcji drugiej wpisano liczbe wieksza niz ilosc telefonow na liscie\n";
 	else
 	{
@@ -322,7 +322,35 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		}
 		po_wpisaniu_mediany->wsk_nastepnika = nowy;
 	}
+	telefon *zamiana = poczatek;
+	int ile_telefonow_jest_w_trzecim_podpunkcie = 0;
+	telefon*najtanszy = new telefon;
+	najtanszy->cena = poczatek->cena;;
+	while (zamiana != NULL)
+	{
+		if (zamiana->cena < najtanszy->cena)
+		{
+			najtanszy->cena = zamiana->cena;
+			najtanszy->marka = zamiana->marka;
+			najtanszy->model = zamiana->model;
+			najtanszy->wsk_nastepnika = zamiana->wsk_nastepnika;
+		}
+		zamiana = zamiana->wsk_nastepnika;
+		ile_telefonow_jest_w_trzecim_podpunkcie++;
+	
+	}
+	zamiana = poczatek;
 	bool czy_prawda = true;
+	if (kolejny_numer> ile_telefonow_jest_w_trzecim_podpunkcie)
+		czy_prawda = false;
+	//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
+	else
+	{
+		
+
+
+	}
+	
 	return czy_prawda;
 }
 //void dopisz_przedostatni(telefon *adres)
@@ -449,7 +477,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 4;
+		int ile_usunac = 2;
+		int kolejny_numer = 5;
 		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
@@ -459,7 +488,7 @@ string nazwapliku = "dane.txt";//do testow
 		cout << "lista po zrobieniu pierwszej funkcji wyglada nastepujaco:";
 		drukuj_liste_it(nowalista);
 		
-		druga(nowalista, ile_usunac,"SuperDzynDzynPolska","stacjonarny");//podpunkt 4
+		druga(nowalista, ile_usunac,"SuperDzynDzynPolska","stacjonarny", kolejny_numer);//podpunkt 4
 		cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 5
