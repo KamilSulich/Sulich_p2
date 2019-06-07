@@ -167,19 +167,56 @@ bool druga(telefon *adres_do_drugiej_funkcji)
 	telefon *najdrozszy = adres_do_drugiej_funkcji;
 	telefon *najmniej_liter = adres_do_drugiej_funkcji;
 	telefon *zamieniona_lista = adres_do_drugiej_funkcji;
+	telefon *lista_podpunkt_pierwszy = adres_do_drugiej_funkcji;
+	int ktory_najdrozszy = 0;
+	int ktory_ma_najmniej_liter = 0;
+	int ktora_iteracja = 0;
 	while (szukanie_najdrozszego->wsk_nastepnika != NULL)
 	{
+		ktora_iteracja++;
 		if (szukanie_najdrozszego->cena > najdrozszy->cena)
+		{
 			najdrozszy = szukanie_najdrozszego;
+			ktory_najdrozszy = ktora_iteracja;
+		}
 		if (szukanie_najdrozszego->model.length() < najmniej_liter->model.length())
-			najmniej_liter = szukanie_najdrozszego;
+		{
+				najmniej_liter = szukanie_najdrozszego;
+				ktory_ma_najmniej_liter = ktora_iteracja;
+		}
 		szukanie_najdrozszego = szukanie_najdrozszego->wsk_nastepnika;
 	}
-
-	cout << "\ndruk od najdrozszego: \n";//do testow
-	drukuj_liste_it(najdrozszy);//do testow
-	cout << "\ndruk od najmniejliter: \n";//do testow
-	drukuj_liste_it(najmniej_liter);//do testow
+	//krok numer 1
+	for (int i = 1; i < ktory_najdrozszy-1; i++)
+	{
+		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
+	}
+	if (ktory_ma_najmniej_liter == ktora_iteracja)//moze to byc szczegolny przypadek, do sprawdzenia pozniej
+	{
+		cout << "najmiej liter ma ostatni element na lsicie";
+	}
+	lista_podpunkt_pierwszy->wsk_nastepnika = lista_podpunkt_pierwszy->wsk_nastepnika->wsk_nastepnika;
+	//dzieki powyzszej linijce,w tym momencie element poprzedzajacy najdrozszy telefon, wskazuje na następny za najdroższym
+	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	//krok 2
+	for (int i = 1; i < ktory_ma_najmniej_liter; i++)
+	{
+		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
+	}
+	lista_podpunkt_pierwszy->wsk_nastepnika = najdrozszy;//teraz 
+	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
+	//krok 3
+	//for (int i = 1; i < ktory_ma_najmniej_liter+1; i++)//przewiniecie listy do elementu ktory jest po najtanszym,
+	//	//czyli juz poprawnie umieszczonego najdrozszego;
+	//{
+	//	lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
+	//}
+	cout <<"lista po pierwszym punkcie";//do testow
+	drukuj_liste_it(lista_podpunkt_pierwszy);//do testow
+	//cout << "\ndruk od najdrozszego, ma on numer :"<<ktory_najdrozszy<<"\n";//do testow
+	//drukuj_liste_it(najdrozszy);//do testow
+	//cout << "\ndruk od najmniejliter, ma on numer :" << ktory_ma_najmniej_liter << "\n";//do testow
+	//drukuj_liste_it(najmniej_liter);//do testow
 	return false;
 }
 //void dopisz_przedostatni(telefon *adres)
