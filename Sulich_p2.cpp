@@ -426,10 +426,10 @@ int main()
 {
 	//podpunkt 1
 	telefon *nowalista = new telefon();
-	/*cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
+	cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
 	string nazwapliku;
-	cin >> nazwapliku;*/
-string nazwapliku = "dane.txt";//do testow
+	cin >> nazwapliku;
+//string nazwapliku = "dane.txt";//do testow
 	ifstream plik(nazwapliku);
 	if (!plik.is_open())
 	{
