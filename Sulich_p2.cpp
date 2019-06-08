@@ -50,7 +50,7 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 	while (adres_do_drukowania != NULL)
 	{
 		// wypisujemy zawartość elementu
-		//cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
+		cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
 		cout << (*adres_do_drukowania).model << " ";
 		cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
 		//cout << "\n";
@@ -266,8 +266,8 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			tmp = lista_podpunkt_drugi;
 			tmp->wsk_nastepnika = NULL;
 			usuniete_ceny[ile_zostalo_do_usuniecia-1] = tmp->cena;
-			cout << "usuwam element:";//do testow
-			drukuj_liste_it(tmp);//do testow
+			//cout << "usuwam element:";//do testow
+			//drukuj_liste_it(tmp);//do testow
 			tmp = NULL;
 			delete tmp;
 
@@ -277,11 +277,11 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		/////////////////////////////////////////////////
 		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym
 		telefon * nowy=new telefon;
-		cout << "Usuniete ceny wygladaja nastepujaco:\n";
-		for (int i = 0; i < ile_elementow_usunac; i++)
-		{
-			cout << usuniete_ceny[i]<<"\n";//do testow
-		}
+		//cout << "Usuniete ceny wygladaja nastepujaco:\n";//do testow
+		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
+		//{//do testow
+		//	cout << usuniete_ceny[i]<<"\n";//do testow
+		//}//do testow
 		float min = usuniete_ceny[0];
 		float i_min = usuniete_ceny[0];;
 		float tmp= usuniete_ceny[0];
@@ -302,11 +302,11 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			posortowane_ceny[i] = min;
 			
 		}
-		cout << "posortowane ceny wygladaja nastepujaco:\n";
-		for (int i = 0; i < ile_elementow_usunac; i++)
-		{
-			cout << posortowane_ceny[i] << "\n";//do testow
-		}
+		//cout << "posortowane ceny wygladaja nastepujaco:\n";//do testow
+		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
+		//{//do testow
+		//	cout << posortowane_ceny[i] << "\n";//do testow
+		//}//do testow
 		if (ile_elementow_usunac % 2 == 1)
 			mediana = posortowane_ceny[ile_elementow_usunac / 2];
 		else
@@ -393,73 +393,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	
 	return czy_prawda;
 }
-//void dopisz_przedostatni(telefon *adres)
-//{
-//	string dopisany_marka;
-//	int dopisana_temp;
-//	telefon *kopia = adres;
-//	telefon *start = adres;
-//	int ile = 0;
-//	while (kopia != NULL)
-//	{
-//		ile++;
-//		kopia = kopia->wsk_nastepnika;
-//	}
-//	if (ile == 1)
-//	{
-//		telefon * dopisany = new telefon;
-//
-//		cout << " wpisz nowy marka do dodania" << endl;
-//		cin >> dopisany_marka;
-//		cout << " wpisz jego temperature topienia" << endl;
-//		cin >> dopisana_temp;
-//		//dopisany_marka = "potas";//do testow
-//		//dopisana_temp = 64;//do testow
-//		dopisany->marka = dopisany_marka;
-//		dopisany->cena = dopisana_temp;
-//		/////
-//
-//		telefon * falszywy_ostatni = new telefon;
-//		falszywy_ostatni->marka = adres->marka;
-//		falszywy_ostatni->cena = adres->cena;
-//		falszywy_ostatni->wsk_nastepnika = NULL;
-//
-//		dopisany->wsk_nastepnika = falszywy_ostatni;
-//		*adres = *dopisany;
-//	}
-//
-//	else if (ile > 1)
-//	{	//cout << ile;//do testow;
-//
-//		for (int i = 1; i < ile - 1; i++)
-//		{
-//			adres = adres->wsk_nastepnika;
-//		}
-//
-//		//cout << adres->marka;//do testow;
-//		telefon * dopisany = new telefon;
-//		cout << " wpisz nowy marka do dodania" << endl;
-//		cin >> dopisany_marka;
-//		cout << " wpisz jego temperature topienia" << endl;
-//		cin >> dopisana_temp;
-//		//dopisany_marka = "potas";//do testow
-//		//dopisana_temp = 64;//do testow
-//		dopisany->marka = dopisany_marka;
-//		dopisany->cena = dopisana_temp;
-//		//dopisany->wsk_nastepnika = adres->wsk_nastepnika;//shallow copy
-//		dopisany->wsk_nastepnika = new telefon(*adres->wsk_nastepnika);//deep copy
-//		adres = start;
-//		for (int i = 1; i < ile - 1; i++)
-//		{
-//			adres = adres->wsk_nastepnika;
-//		}
-//		adres->wsk_nastepnika = dopisany;
-//
-//	}
-//	else
-//		cout << "lista jest zbyt krotka, aby cos do niej dopisywac na przedostatnim miejscu ";
-//	cout << "nastapilo dodanie markau na przedostatnim miejscu";
-//}
+
 void skasuj_liste(telefon *lista_do_skasowania)
 {
 	telefon *aktualny;
@@ -510,16 +444,16 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		
 		plik >> plik_marka >>plik_model>> plik_cena;
-		cout << "marka to :" << plik_marka <<" Model to "<<plik_model<<" cena to: " << plik_cena <<endl;//to do testow
+		//cout << "marka to :" << plik_marka <<" Model to "<<plik_model<<" cena to: " << plik_cena <<endl;//to do testow
 		nowalista = wczytaj_na_liste(nowalista, plik_marka, plik_model, plik_cena);//podpunkt 1
 		ile_telefonow_w_pliku++;
 	}
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 2;
+		int ile_usunac = 3;
 		int kolejny_numer = 2;
-		cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";
+		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
 		int ile_telefonow = 0;
@@ -528,8 +462,16 @@ string nazwapliku = "dane.txt";//do testow
 		cout << "lista po zrobieniu pierwszej funkcji wyglada nastepujaco:";
 		drukuj_liste_it(nowalista);
 		
-		druga(nowalista, ile_usunac,"SuperDzynDzynPolska","stacjonarny", kolejny_numer);//podpunkt 4
-		cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+		if (druga(nowalista, ile_usunac, "SuperDzynDzynPolska", "stacjonarny", kolejny_numer))//podpunkt 4
+		{
+			cout << "w trzecim podpunkcie drugiej funkcji nastapila zamiana \n";
+			cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+		}
+		else
+		{
+			cout << "w trzecim podpunkcie drugiej funkcji nie bylo zamiany\n";
+			cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+		}
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 5
 	}
