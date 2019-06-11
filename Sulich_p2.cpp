@@ -130,7 +130,9 @@ int pierwsza(telefon *adres_do_pierwszej_funkcji, int &ile_telefonow_zawiera_cia
 			ostatni->wsk_nastepnika = dopisany;
 			ile_jest_na_liscie++;
 		}
-		adres_do_pierwszej_funkcji = ostatni;//tu jest blad bo przypisuje do tego element listy
+		else
+			delete(dopisany);
+		adres_do_pierwszej_funkcji = ostatni;
 		telefon *start = adres_do_pierwszej_funkcji;
 		string ita_marka;
 		string jta_marka;
@@ -426,10 +428,10 @@ int main()
 {
 	//podpunkt 1
 	telefon *nowalista = new telefon();
-	cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
+	/*cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
 	string nazwapliku;
-	cin >> nazwapliku;
-//string nazwapliku = "dane.txt";//do testow
+	cin >> nazwapliku;*/
+string nazwapliku = "dane.txt";//do testow
 	ifstream plik(nazwapliku);
 	if (!plik.is_open())
 	{
