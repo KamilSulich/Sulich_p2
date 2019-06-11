@@ -174,7 +174,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	telefon *nastepny_po_najmniejliterowym = adres_do_drugiej_funkcji;
 	telefon *tmp = adres_do_drugiej_funkcji;
 	telefon *po_wpisaniu_mediany = poczatek;
-
+	telefon *nastepny_po_najdrozszym = adres_do_drugiej_funkcji;
 	float mediana = 0;
 	int ktory_najdrozszy = 0;
 	int ktory_ma_najmniej_liter = 0;
@@ -186,6 +186,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		{
 			najdrozszy = szukanie_najdrozszego;
 			ktory_najdrozszy = ktora_iteracja;
+			nastepny_po_najdrozszym = szukanie_najdrozszego->wsk_nastepnika;
 		}
 		if (szukanie_najdrozszego->model.length() < najmniej_liter->model.length())
 		{
@@ -195,15 +196,12 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		szukanie_najdrozszego = szukanie_najdrozszego->wsk_nastepnika;
 	}
 	//krok numer 1
-	for (int i = 1; i < ktory_najdrozszy-1; i++)//przewiniecie do najdrozszego elementu
+	for (int i = 1; i < ktory_najdrozszy-1; i++)//przewiniecie do elementu przed najdrozszym elementem
 	{
 		lista_podpunkt_pierwszy = lista_podpunkt_pierwszy->wsk_nastepnika;
 	}
-	//if (ktory_ma_najmniej_liter == ktora_iteracja)//moze to byc szczegolny przypadek, do sprawdzenia pozniej
-	//{
-	//	cout << "najmiej liter ma ostatni element na lsicie";
-	//}
-	lista_podpunkt_pierwszy->wsk_nastepnika = lista_podpunkt_pierwszy->wsk_nastepnika->wsk_nastepnika;
+	
+	lista_podpunkt_pierwszy->wsk_nastepnika = nastepny_po_najdrozszym;
 	//dzieki powyzszej linijce,w tym momencie element poprzedzajacy najdrozszy telefon, wskazuje na następny za najdroższym
 	lista_podpunkt_pierwszy = poczatek;//przewiniecie listy na poczatek;
 	for (int i = 1; i < ktory_ma_najmniej_liter; i++)//teraz jestesmy w elemencie majacym najmniej liter
@@ -481,8 +479,6 @@ string nazwapliku = "dane.txt";//do testow
 	{
 		cout << "Wczytany plik jest pusty;";
 	}
-
-
 	cout << "\nKoniec pracy programu\n";
 	return 0;
 }
