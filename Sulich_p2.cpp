@@ -239,7 +239,37 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
 	if (ile_elementow_usunac >= ktora_iteracja)
+	{
 		cout << "W drugim argumencie funkcji drugiej wpisano liczbe wieksza lub rowna ilosci telefonow na liscie\n";
+		//////kasowanie listy
+		telefon *aktualny;
+		telefon *poprzedni;
+		telefon *tmp;
+		telefon *glowa = lista_podpunkt_pierwszy;
+		aktualny = glowa;
+		poprzedni = NULL;
+		while (aktualny != NULL)
+		{
+			if (aktualny == glowa)
+				// jesli usuniemy glowe, to nowa glowa bedzie o jeden element dalej
+				glowa = glowa->wsk_nastepnika;
+			else
+				// a jesli usuwamy cos w srodku lub na koncu listy, to
+				// tworzymy połaczenie z pominieciem kasowanego elementu
+				poprzedni->wsk_nastepnika = aktualny->wsk_nastepnika;
+			// w obu przypadkach zapamietujemy adres elementu do usuniecia
+			tmp = aktualny;
+			// przesuwamy sie o jeden element dalej
+			aktualny = aktualny->wsk_nastepnika;
+			// ...i zwalniamy pamiec zajeta przez usuwany element
+			delete tmp;
+		};
+		lista_podpunkt_pierwszy = NULL;
+		cout << "Skasowano liste";
+		//////kasowanie listy
+		return false;//w tym momencie jako ze lista zostala w calosci usuneta, napewno nie bedzie zadenj zmiany
+	}
+
 	else
 	{
 		/////////////////////////////////////////////////
