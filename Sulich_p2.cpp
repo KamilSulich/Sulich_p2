@@ -175,6 +175,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	telefon *tmp = adres_do_drugiej_funkcji;
 	telefon *po_wpisaniu_mediany = poczatek;
 	telefon *nastepny_po_najdrozszym = adres_do_drugiej_funkcji;
+	bool czy_prawda = true;
 	float mediana = 0;
 	int ktory_najdrozszy = 0;
 	int ktory_ma_najmniej_liter = 0;
@@ -238,40 +239,8 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	//drukuj_liste_it(najmniej_liter);//do testow
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
-	if (ile_elementow_usunac >= ktora_iteracja)
-	{
-		cout << "W drugim argumencie funkcji drugiej wpisano liczbe wieksza lub rowna ilosci telefonow na liscie\n";
-		//////kasowanie listy
-		telefon *aktualny;
-		telefon *poprzedni;
-		telefon *tmp;
-		telefon *glowa = lista_podpunkt_pierwszy;
-		aktualny = glowa;
-		poprzedni = NULL;
-		while (aktualny != NULL)
-		{
-			if (aktualny == glowa)
-				// jesli usuniemy glowe, to nowa glowa bedzie o jeden element dalej
-				glowa = glowa->wsk_nastepnika;
-			else
-				// a jesli usuwamy cos w srodku lub na koncu listy, to
-				// tworzymy połaczenie z pominieciem kasowanego elementu
-				poprzedni->wsk_nastepnika = aktualny->wsk_nastepnika;
-			// w obu przypadkach zapamietujemy adres elementu do usuniecia
-			tmp = aktualny;
-			// przesuwamy sie o jeden element dalej
-			aktualny = aktualny->wsk_nastepnika;
-			// ...i zwalniamy pamiec zajeta przez usuwany element
-			delete tmp;
-		};
-		lista_podpunkt_pierwszy = NULL;
-		cout << "Skasowano liste";
-		//////kasowanie listy
-		return false;//w tym momencie jako ze lista zostala w calosci usuneta, napewno nie bedzie zadenj zmiany
-	}
-
-	else
-	{
+		
+	
 		/////////////////////////////////////////////////
 		telefon*lista_po_usunieciu = poczatek;
 		for (int i = 0; i < ile_elementow_usunac; i++)
@@ -314,7 +283,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		//}//do testow
 		float min = usuniete_ceny[0];
 		float i_min = usuniete_ceny[0];;
-		float tmp= usuniete_ceny[0];
+		float tymczasowo_do_zamiany= usuniete_ceny[0];
 
 		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
@@ -323,9 +292,9 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			{
 				if (usuniete_ceny[j] < min)
 				{
-					tmp = min;
+					tymczasowo_do_zamiany = min;
 					min = usuniete_ceny[j];
-					usuniete_ceny[j] = tmp;
+					usuniete_ceny[j] = tymczasowo_do_zamiany;
 					i_min = j;
 				}
 			}
@@ -352,7 +321,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			po_wpisaniu_mediany = po_wpisaniu_mediany->wsk_nastepnika;
 		}
 		po_wpisaniu_mediany->wsk_nastepnika = nowy;
-	}
+	
 	/////podpunkt 3
 	telefon *zamiana = poczatek;
 	int ile_telefonow_jest_w_trzecim_podpunkcie = 0;
@@ -376,7 +345,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	
 	}
 	zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-	bool czy_prawda = true;
+	
 	if (kolejny_numer> ile_telefonow_jest_w_trzecim_podpunkcie)
 		czy_prawda = false;
 	//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
@@ -481,7 +450,7 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 3;
+		int ile_usunac = 5;
 		int kolejny_numer = 2;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
