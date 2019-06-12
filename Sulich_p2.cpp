@@ -239,7 +239,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
 	if (ile_elementow_usunac >= ktora_iteracja)
-		cout << "Q drugim argumencie funkcji drugiej wpisano liczbe wieksza lub rowna ilosci telefonow na liscie\n";
+		cout << "W drugim argumencie funkcji drugiej wpisano liczbe wieksza lub rowna ilosci telefonow na liscie\n";
 	else
 	{
 		/////////////////////////////////////////////////
@@ -395,7 +395,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	return czy_prawda;
 }
 
-void skasuj_liste(telefon *lista_do_skasowania)
+void skasuj_liste(telefon *&lista_do_skasowania)
 {
 	telefon *aktualny;
 	telefon *poprzedni;
@@ -421,7 +421,6 @@ void skasuj_liste(telefon *lista_do_skasowania)
 	};
 	lista_do_skasowania = NULL;
 	cout << "Skasowano liste";
-	drukuj_liste_it(lista_do_skasowania);// podpunkt 6
 }
 int main()
 {
@@ -475,6 +474,9 @@ string nazwapliku = "dane.txt";//do testow
 		}
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 5
+		drukuj_liste_it(nowalista);	// podpunkt 6
+
+
 	}
 	else
 	{
