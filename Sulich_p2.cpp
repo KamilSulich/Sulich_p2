@@ -238,8 +238,8 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	//drukuj_liste_it(najmniej_liter);//do testow
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
-	if (ile_elementow_usunac > ktora_iteracja)
-		cout << "Blad, w drugim argumencie funkcji drugiej wpisano liczbe wieksza niz ilosc telefonow na liscie\n";
+	if (ile_elementow_usunac >= ktora_iteracja)
+		cout << "Q drugim argumencie funkcji drugiej wpisano liczbe wieksza lub rowna ilosci telefonow na liscie\n";
 	else
 	{
 		/////////////////////////////////////////////////
@@ -311,7 +311,8 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			mediana = posortowane_ceny[ile_elementow_usunac / 2];
 		else
 			mediana = (posortowane_ceny[ile_elementow_usunac / 2]+ posortowane_ceny[ile_elementow_usunac / 2-1])/2;
-
+		delete(posortowane_ceny);
+		delete(usuniete_ceny);
 		nowy->marka = jakas_marka;
 		nowy->model = jakis_model;
 		nowy->cena = mediana;
