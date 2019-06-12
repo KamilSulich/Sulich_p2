@@ -262,6 +262,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		usuniete_ceny = new telefon; 
 		telefon *poczatek_usunietych_cen = usuniete_ceny;
 		telefon *posortowane_ceny; 
+		posortowane_ceny = new telefon;
 		telefon *poczatek_posortowanych_cen = posortowane_ceny;
 		posortowane_ceny = new telefon;
 
@@ -274,7 +275,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			tmp = lista_podpunkt_drugi;
 			tmp->wsk_nastepnika = NULL;
 			telefon * nowy = new telefon;
-			nowy->cena= tmp->cena;
+			nowy->cena= lista_podpunkt_drugi->cena;
 			usuniete_ceny->wsk_nastepnika = nowy;
 			usuniete_ceny = usuniete_ceny->wsk_nastepnika;
 			usuniete_ceny->wsk_nastepnika = NULL;
@@ -300,7 +301,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 
 		for (int i = 0; i < ile_elementow_usunac; i++)//w tej petli sortuje wszystkie elementy z listy nieposortowanej
 		{
-			for (int ii = 0; ii < i; i++)//przesuniecie sie do elementu i-tego
+			for (int ii = 0; ii < i-1; i++)//przesuniecie sie do elementu i-tego
 				usuniete_ceny = usuniete_ceny->wsk_nastepnika;
 			min = usuniete_ceny;
 			for (int j = i; j < ile_elementow_usunac; j++)// w tej petli ustala sie minimum nieposortowanej tablicy
@@ -484,7 +485,7 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 30;
+		int ile_usunac = 3;
 		int kolejny_numer = 2;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
