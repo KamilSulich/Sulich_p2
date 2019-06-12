@@ -260,11 +260,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 
 		telefon *usuniete_ceny;   
 		usuniete_ceny = new telefon; 
-		telefon *poczatek_usunietych_cen = usuniete_ceny;
-		telefon *posortowane_ceny; 
-		posortowane_ceny = new telefon;
-		telefon *poczatek_posortowanych_cen = posortowane_ceny;
-		posortowane_ceny = new telefon;
+		telefon *poczatek_usunietych_cen = usuniete_ceny;		
 
 		for (int ile_zostalo_do_usuniecia = ile_elementow_usunac; ile_zostalo_do_usuniecia > 0; ile_zostalo_do_usuniecia--)
 		{
@@ -274,8 +270,11 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			}
 			tmp = lista_podpunkt_drugi;
 			tmp->wsk_nastepnika = NULL;
+
 			telefon * nowy = new telefon;
-			nowy->cena= lista_podpunkt_drugi->cena;
+			nowy->cena = lista_podpunkt_drugi->cena;
+			//nowy->cena= lista_podpunkt_drugi->cena;
+			usuniete_ceny->cena = lista_podpunkt_drugi->cena;
 			usuniete_ceny->wsk_nastepnika = nowy;
 			usuniete_ceny = usuniete_ceny->wsk_nastepnika;
 			usuniete_ceny->wsk_nastepnika = NULL;
@@ -295,14 +294,19 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		//{//do testow
 		//	cout << usuniete_ceny[i]<<"\n";//do testow
 		//}//do testow
+		telefon *posortowane_ceny;
+		posortowane_ceny = new telefon;
+		telefon *poczatek_posortowanych_cen = posortowane_ceny;
 		telefon* min = poczatek_posortowanych_cen;
+		min->cena = usuniete_ceny->cena;
 		telefon* gdzie_min = min;
 		telefon* tmp= usuniete_ceny;
 
 		for (int i = 0; i < ile_elementow_usunac; i++)//w tej petli sortuje wszystkie elementy z listy nieposortowanej
 		{
 			for (int ii = 0; ii < i-1; i++)//przesuniecie sie do elementu i-tego
-				usuniete_ceny = usuniete_ceny->wsk_nastepnika;
+				usuniete_ceny = usuniete_ceny->wsk_nastepnika;//Zgłoszono wyjątek: naruszenie dostępu do odczytu.
+			//usuniete_ceny było nullptr.
 			min = usuniete_ceny;
 			for (int j = i; j < ile_elementow_usunac; j++)// w tej petli ustala sie minimum nieposortowanej tablicy
 			{
