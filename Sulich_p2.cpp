@@ -325,10 +325,9 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		po_wpisaniu_mediany->wsk_nastepnika = nowy;
 		*adres_do_drugiej_funkcji = *nowy;
 		czy_prawda = false;//skoro usuniemy cala liste, i zostanie tylko jeden dopisany telefon z cena rowna medianie, to zamiana nie nastapi
-	}
-	else
+	}//koniec przypadku gdzie usuwamy cala liste
+	else//teraz przypadek gdzie nie usuwamy calej listy
 	{
-
 		/////////////////////////////////////////////////
 		telefon*lista_po_usunieciu = poczatek;
 		for (int i = 0; i < ile_elementow_usunac; i++)
@@ -568,8 +567,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 6;
-		int kolejny_numer = 1;
+		int ile_usunac = 3;
+		int kolejny_numer = 4;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
