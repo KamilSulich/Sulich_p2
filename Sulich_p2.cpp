@@ -451,23 +451,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			kolejny_telefon->wsk_nastepnika = zamiana->wsk_nastepnika;
 			zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
 
-			/////////////////nastepny_po_kolejnym to telefon ktory jest nastepny w kolejce, zaraz po kolejnym telefonie
-			telefon *nastepny_po_kolejnym = new telefon;
-			if (kolejny_telefon->wsk_nastepnika != NULL)
-			{
-				nastepny_po_kolejnym->cena = kolejny_telefon->wsk_nastepnika->cena;
-				nastepny_po_kolejnym->marka = kolejny_telefon->wsk_nastepnika->marka;
-				nastepny_po_kolejnym->model = kolejny_telefon->wsk_nastepnika->model;
-				nastepny_po_kolejnym->wsk_nastepnika = kolejny_telefon->wsk_nastepnika->wsk_nastepnika;
-			}
-			else
-			{
-				nastepny_po_kolejnym->cena = NULL;
-				nastepny_po_kolejnym->marka = "";
-				nastepny_po_kolejnym->model = "";
-				nastepny_po_kolejnym->wsk_nastepnika = NULL;
-			}
-			/////////////////
+			
 
 			if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
 			{
@@ -508,6 +492,23 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 					}
 					//cout << "zamiana->model" << zamiana->model;//do testow
 					zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
+					/////////////////nastepny_po_kolejnym to telefon ktory jest nastepny w kolejce, zaraz po kolejnym telefonie
+					telefon *nastepny_po_kolejnym = new telefon;
+					if (kolejny_telefon->wsk_nastepnika != NULL)
+					{
+						nastepny_po_kolejnym->cena = kolejny_telefon->wsk_nastepnika->cena;
+						nastepny_po_kolejnym->marka = kolejny_telefon->wsk_nastepnika->marka;
+						nastepny_po_kolejnym->model = kolejny_telefon->wsk_nastepnika->model;
+						nastepny_po_kolejnym->wsk_nastepnika = kolejny_telefon->wsk_nastepnika->wsk_nastepnika;
+					}
+					else
+					{
+						nastepny_po_kolejnym->cena = NULL;
+						nastepny_po_kolejnym->marka = "";
+						nastepny_po_kolejnym->model = "";
+						nastepny_po_kolejnym->wsk_nastepnika = NULL;
+					}
+					/////////////////
 					zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
 					for (int i = 1; i < kolejny_numer - 1; i++)
 					{
@@ -583,8 +584,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 5;
-		int kolejny_numer = 2;
+		int ile_usunac = 3;
+		int kolejny_numer = 1;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
