@@ -380,19 +380,22 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			}
 			/////////////////
 
-		if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest przed najtanszym
+		if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
 		{
-			cout << "wystapil szczegolny przypadek";
+			//cout << "wystapil szczegolny przypadek,gdy kolejny jest bezposrednio przed najtanszym\n";//do testow
 			kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//krok 1
-			najtanszy->wsk_nastepnika = kolejny_telefon;
+			najtanszy->wsk_nastepnika = kolejny_telefon;//krok 2
 			for (int i = 1; i < kolejny_numer - 1; i++)//przewijam do poprzednika kolejnego telefonu
 			{
 				zamiana = zamiana->wsk_nastepnika;
 			}
-			zamiana->wsk_nastepnika = najtanszy;
+			if (zamiana->cena == kolejny_telefon->cena)//taki przypadek nastapi dla 4,1 bo ususniete zostana wszystkie przed kolejnym
+				*poczatek = *najtanszy;//krok 3 dla 4,1
+			else		
+			zamiana->wsk_nastepnika = najtanszy;//krok 3 dla 1,4 zamiana tu to kruger, dla 4,1 to xiaomi
 			zamiana = poczatek;
 		}
-		else
+		else//normalny przypadek, gdy kolejny nie jest bezposrednio przed najtanszym
 		{
 			for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
 			{
@@ -475,8 +478,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 1;
-		int kolejny_numer = 4;
+		int ile_usunac = 4;
+		int kolejny_numer = 1;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
@@ -489,13 +492,14 @@ string nazwapliku = "dane.txt";//do testow
 		if (druga(nowalista, ile_usunac, "SuperDzynDzynPolska", "stacjonarny", kolejny_numer))//podpunkt 4
 		{
 			cout << "w trzecim podpunkcie drugiej funkcji nastapila zamiana \n";
-			cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
 		}
 		else
 		{
-			cout << "w trzecim podpunkcie drugiej funkcji nie bylo zamiany\n";
-			cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+			cout << "w trzecim podpunkcie drugiej funkcji nie bylo zamiany\n";		
 		}
+		cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
+		cout << "\n\n ile_usunac =" << ile_usunac << ",kolejny_numer=" << kolejny_numer << "\n";//do testow
+
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 5
 		drukuj_liste_it(nowalista);	// podpunkt 6
