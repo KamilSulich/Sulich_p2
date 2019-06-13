@@ -239,13 +239,17 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 	//drukuj_liste_it(najmniej_liter);//do testow
 	*poczatek = *lista_podpunkt_pierwszy;//traz orginalna lista jest lista z zmieniona kolejnoscia
 	/////////////////////////////////////////////////////PODPUNKT 2/////////////////////////////////////////////////////
-		
-	
+	//cout << "ktora_iteracja"<<ktora_iteracja;
+	if (ile_elementow_usunac > ktora_iteracja)//jezeli ten warunek jest spelniony, to trzeba usunac cala liste i dodac na koncu model z mediana
+	{
+		ile_elementow_usunac = ktora_iteracja + 1;//
+		cout << "w funckji druga wpisano tyle parametrow, ze zostanie usunieta cala lista";
 		/////////////////////////////////////////////////
 		telefon*lista_po_usunieciu = poczatek;
 		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
-			lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
+			if (lista_po_usunieciu != NULL)
+				lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
 		}
 		/////////////////////////////////////////////////
 
@@ -258,11 +262,12 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		{
 			for (int j = 0; j < ile_zostalo_do_usuniecia - 1; j++)//przesuwam sie do emenetu ktory cche usunac
 			{
-				lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
+				if (lista_podpunkt_drugi->wsk_nastepnika != NULL)
+					lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
 			}
 			tmp = lista_podpunkt_drugi;
 			tmp->wsk_nastepnika = NULL;
-			usuniete_ceny[ile_zostalo_do_usuniecia-1] = tmp->cena;
+			usuniete_ceny[ile_zostalo_do_usuniecia - 1] = tmp->cena;
 			//cout << "usuwam element:";//do testow
 			//drukuj_liste_it(tmp);//do testow
 			tmp = NULL;
@@ -270,10 +275,9 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 
 			lista_podpunkt_drugi = poczatek;
 		}
-		
+
 		/////////////////////////////////////////////////
-		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym
-		telefon * nowy=new telefon;
+		telefon * nowy = new telefon;
 		//cout << "Usuniete ceny wygladaja nastepujaco:\n";//do testow
 		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
 		//{//do testow
@@ -281,7 +285,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		//}//do testow
 		float min = usuniete_ceny[0];
 		float i_min = usuniete_ceny[0];;
-		float tymczasowo_do_zamiany= usuniete_ceny[0];
+		float tymczasowo_do_zamiany = usuniete_ceny[0];
 
 		for (int i = 0; i < ile_elementow_usunac; i++)
 		{
@@ -297,7 +301,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 				}
 			}
 			posortowane_ceny[i] = min;
-			
+
 		}
 		//cout << "posortowane ceny wygladaja nastepujaco:\n";//do testow
 		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
@@ -307,7 +311,7 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		if (ile_elementow_usunac % 2 == 1)
 			mediana = posortowane_ceny[ile_elementow_usunac / 2];
 		else
-			mediana = (posortowane_ceny[ile_elementow_usunac / 2]+ posortowane_ceny[ile_elementow_usunac / 2-1])/2;
+			mediana = (posortowane_ceny[ile_elementow_usunac / 2] + posortowane_ceny[ile_elementow_usunac / 2 - 1]) / 2;
 		delete(posortowane_ceny);
 		delete(usuniete_ceny);
 		nowy->marka = jakas_marka;
@@ -319,37 +323,123 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			po_wpisaniu_mediany = po_wpisaniu_mediany->wsk_nastepnika;
 		}
 		po_wpisaniu_mediany->wsk_nastepnika = nowy;
-	
-	/////podpunkt 3
-	telefon *zamiana = poczatek;
-	int ile_telefonow_jest_w_trzecim_podpunkcie = 0;
-	telefon*najtanszy = new telefon;
-	najtanszy->cena = poczatek->cena;
-	int ktory_telefon_jest_najtanszy = 0;
-	int potencjalnie_najtanszy_telefon = 0;
-	while (zamiana != NULL)
-	{
-		potencjalnie_najtanszy_telefon++;
-		if (zamiana->cena < najtanszy->cena)
-		{
-			najtanszy->cena = zamiana->cena;
-			najtanszy->marka = zamiana->marka;
-			najtanszy->model = zamiana->model;
-			najtanszy->wsk_nastepnika = zamiana->wsk_nastepnika;
-			ktory_telefon_jest_najtanszy = potencjalnie_najtanszy_telefon;
-		}
-		zamiana = zamiana->wsk_nastepnika;
-		ile_telefonow_jest_w_trzecim_podpunkcie++;
-	
+		*adres_do_drugiej_funkcji = *nowy;
+		czy_prawda = false;//skoro usuniemy cala liste, i zostanie tylko jeden dopisany telefon z cena rowna medianie, to zamiana nie nastapi
 	}
-	zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-	
-	if (kolejny_numer> ile_telefonow_jest_w_trzecim_podpunkcie)
-		czy_prawda = false;
-	//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
-	else//robimy zamiane telefonow
+	else
 	{
-		
+
+		/////////////////////////////////////////////////
+		telefon*lista_po_usunieciu = poczatek;
+		for (int i = 0; i < ile_elementow_usunac; i++)
+		{
+			if (lista_po_usunieciu!=NULL)
+			lista_po_usunieciu = lista_po_usunieciu->wsk_nastepnika;
+		}
+		/////////////////////////////////////////////////
+
+		float *usuniete_ceny; // to oznacza, że nazwa usuniete_ceny jest wskaźnikiem do pierwszego elementu tablicy  
+		usuniete_ceny = new float[ile_elementow_usunac]; // rezerwujemy pamięć dla potrzebnej ilości elementów tablicy typu float
+		float *posortowane_ceny; // to oznacza, że nazwa usuniete_ceny jest wskaźnikiem do pierwszego elementu tablicy  
+		posortowane_ceny = new float[ile_elementow_usunac]; // rezerwujemy pamięć dla potrzebnej ilości elementów tablicy typu float
+
+		for (int ile_zostalo_do_usuniecia = ile_elementow_usunac; ile_zostalo_do_usuniecia > 0; ile_zostalo_do_usuniecia--)
+		{
+			for (int j = 0; j < ile_zostalo_do_usuniecia - 1; j++)//przesuwam sie do emenetu ktory cche usunac
+			{
+				if (lista_podpunkt_drugi->wsk_nastepnika!=NULL)
+				lista_podpunkt_drugi = lista_podpunkt_drugi->wsk_nastepnika;
+			}
+			tmp = lista_podpunkt_drugi;
+			tmp->wsk_nastepnika = NULL;
+			usuniete_ceny[ile_zostalo_do_usuniecia - 1] = tmp->cena;
+			//cout << "usuwam element:";//do testow
+			//drukuj_liste_it(tmp);//do testow
+			tmp = NULL;
+			delete tmp;
+
+			lista_podpunkt_drugi = poczatek;
+		}
+
+		/////////////////////////////////////////////////
+		*poczatek = *lista_po_usunieciu;//w tym momencie orginalna lista swój poczatek ma na elemencie, ktory jest emelemnetm nastepnym po ostatnim usunietym
+		telefon * nowy = new telefon;
+		//cout << "Usuniete ceny wygladaja nastepujaco:\n";//do testow
+		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
+		//{//do testow
+		//	cout << usuniete_ceny[i]<<"\n";//do testow
+		//}//do testow
+		float min = usuniete_ceny[0];
+		float i_min = usuniete_ceny[0];;
+		float tymczasowo_do_zamiany = usuniete_ceny[0];
+
+		for (int i = 0; i < ile_elementow_usunac; i++)
+		{
+			min = usuniete_ceny[i];
+			for (int j = i; j < ile_elementow_usunac; j++)// w tej petli ustala sie minimum nieposortowanej tablicy
+			{
+				if (usuniete_ceny[j] < min)
+				{
+					tymczasowo_do_zamiany = min;
+					min = usuniete_ceny[j];
+					usuniete_ceny[j] = tymczasowo_do_zamiany;
+					i_min = j;
+				}
+			}
+			posortowane_ceny[i] = min;
+
+		}
+		//cout << "posortowane ceny wygladaja nastepujaco:\n";//do testow
+		//for (int i = 0; i < ile_elementow_usunac; i++)//do testow
+		//{//do testow
+		//	cout << posortowane_ceny[i] << "\n";//do testow
+		//}//do testow
+		if (ile_elementow_usunac % 2 == 1)
+			mediana = posortowane_ceny[ile_elementow_usunac / 2];
+		else
+			mediana = (posortowane_ceny[ile_elementow_usunac / 2] + posortowane_ceny[ile_elementow_usunac / 2 - 1]) / 2;
+		delete(posortowane_ceny);
+		delete(usuniete_ceny);
+		nowy->marka = jakas_marka;
+		nowy->model = jakis_model;
+		nowy->cena = mediana;
+		nowy->wsk_nastepnika = NULL;
+		while (po_wpisaniu_mediany->wsk_nastepnika != NULL)
+		{
+			po_wpisaniu_mediany = po_wpisaniu_mediany->wsk_nastepnika;
+		}
+		po_wpisaniu_mediany->wsk_nastepnika = nowy;
+
+		/////podpunkt 3
+		telefon *zamiana = poczatek;
+		int ile_telefonow_jest_w_trzecim_podpunkcie = 0;
+		telefon*najtanszy = new telefon;
+		najtanszy->cena = poczatek->cena;
+		int ktory_telefon_jest_najtanszy = 0;
+		int potencjalnie_najtanszy_telefon = 0;
+		while (zamiana != NULL)
+		{
+			potencjalnie_najtanszy_telefon++;
+			if (zamiana->cena < najtanszy->cena)
+			{
+				najtanszy->cena = zamiana->cena;
+				najtanszy->marka = zamiana->marka;
+				najtanszy->model = zamiana->model;
+				najtanszy->wsk_nastepnika = zamiana->wsk_nastepnika;
+				ktory_telefon_jest_najtanszy = potencjalnie_najtanszy_telefon;
+			}
+			zamiana = zamiana->wsk_nastepnika;
+			ile_telefonow_jest_w_trzecim_podpunkcie++;
+
+		}
+		zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+
+		if (kolejny_numer > ile_telefonow_jest_w_trzecim_podpunkcie)
+			czy_prawda = false;
+		//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
+		else//robimy zamiane telefonow
+		{
+
 			//krok 1
 			for (int i = 1; i < kolejny_numer; i++)
 			{
@@ -380,45 +470,45 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 			}
 			/////////////////
 
-		if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
-		{
-			//cout << "wystapil szczegolny przypadek,gdy kolejny jest bezposrednio przed najtanszym\n";//do testow
-			kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//krok 1
-			najtanszy->wsk_nastepnika = kolejny_telefon;//krok 2
-			for (int i = 1; i < kolejny_numer - 1; i++)//przewijam do poprzednika kolejnego telefonu
+			if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
 			{
-				zamiana = zamiana->wsk_nastepnika;
+				//cout << "wystapil szczegolny przypadek,gdy kolejny jest bezposrednio przed najtanszym\n";//do testow
+				kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//krok 1
+				najtanszy->wsk_nastepnika = kolejny_telefon;//krok 2
+				for (int i = 1; i < kolejny_numer - 1; i++)//przewijam do poprzednika kolejnego telefonu
+				{
+					zamiana = zamiana->wsk_nastepnika;
+				}
+				if (zamiana->cena == kolejny_telefon->cena)//taki przypadek nastapi dla 4,1 bo ususniete zostana wszystkie przed kolejnym
+					*poczatek = *najtanszy;//krok 3 dla 4,1
+				else
+					zamiana->wsk_nastepnika = najtanszy;//krok 3 dla 1,4 zamiana tu to kruger, dla 4,1 to xiaomi
+				zamiana = poczatek;
 			}
-			if (zamiana->cena == kolejny_telefon->cena)//taki przypadek nastapi dla 4,1 bo ususniete zostana wszystkie przed kolejnym
-				*poczatek = *najtanszy;//krok 3 dla 4,1
-			else		
-			zamiana->wsk_nastepnika = najtanszy;//krok 3 dla 1,4 zamiana tu to kruger, dla 4,1 to xiaomi
-			zamiana = poczatek;
-		}
-		else//normalny przypadek, gdy kolejny nie jest bezposrednio przed najtanszym
-		{
-			for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
+			else//normalny przypadek, gdy kolejny nie jest bezposrednio przed najtanszym
 			{
-				zamiana = zamiana->wsk_nastepnika;
+				for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
+				{
+					zamiana = zamiana->wsk_nastepnika;
+				}
+				//cout << "zamiana->model" << zamiana->model;//do testow
+				zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
+				zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+				for (int i = 1; i < kolejny_numer - 1; i++)
+				{
+					zamiana = zamiana->wsk_nastepnika;
+				}
+				zamiana->wsk_nastepnika = najtanszy;//wykonano drugi krok;
+				zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+
+				kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//wykonano krok 3
+				najtanszy->wsk_nastepnika = nastepny_po_kolejnym;//wykonano krok 4
+				//cout << "zamiana->model" << zamiana->model;//do testow
+
+
 			}
-			//cout << "zamiana->model" << zamiana->model;//do testow
-			zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
-			zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-			for (int i = 1; i < kolejny_numer - 1; i++)
-			{
-				zamiana = zamiana->wsk_nastepnika;
-			}
-			zamiana->wsk_nastepnika = najtanszy;//wykonano drugi krok;
-			zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-
-			kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//wykonano krok 3
-			najtanszy->wsk_nastepnika = nastepny_po_kolejnym;//wykonano krok 4
-			//cout << "zamiana->model" << zamiana->model;//do testow
-
-
 		}
 	}
-	
 	return czy_prawda;
 }
 
@@ -478,8 +568,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 2;
-		int kolejny_numer = 3;
+		int ile_usunac = 6;
+		int kolejny_numer = 1;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
