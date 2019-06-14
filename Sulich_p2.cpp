@@ -50,9 +50,9 @@ void drukuj_liste_it(telefon *adres_do_drukowania)
 	while (adres_do_drukowania != NULL)
 	{
 		// wypisujemy zawartość elementu
-		cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
+		//cout << (*adres_do_drukowania).marka << " ";//zakomentowane do testow
 		cout << (*adres_do_drukowania).model << " ";
-		cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
+		//cout << (*adres_do_drukowania).cena << " ";//zakomentowane do testow
 		//cout << "\n";
 		// i przechodzimy do następnego
 		adres_do_drukowania = adres_do_drukowania->wsk_nastepnika;
@@ -438,90 +438,115 @@ bool druga(telefon *adres_do_drugiej_funkcji,int ile_elementow_usunac,string jak
 		//cout << "ile_telefonow_jest_w_trzecim_podpunkcie:" << ile_telefonow_jest_w_trzecim_podpunkcie;//do testow
 		else//robimy zamiane telefonow
 		{
-
-			//krok 1
-			for (int i = 1; i < kolejny_numer; i++)
+			if (kolejny_numer == 1)
 			{
-				zamiana = zamiana->wsk_nastepnika;
-			}
-			telefon *kolejny_telefon = new telefon;
-			kolejny_telefon->cena = zamiana->cena;
-			kolejny_telefon->marka = zamiana->marka;
-			kolejny_telefon->model = zamiana->model;
-			kolejny_telefon->wsk_nastepnika = zamiana->wsk_nastepnika;
-			zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-
-			
-
-			if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
-			{
-				//cout << "wystapil szczegolny przypadek,gdy kolejny jest bezposrednio przed najtanszym\n";//do testow
-				kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//krok 1
-				najtanszy->wsk_nastepnika = kolejny_telefon;//krok 2
-				for (int i = 1; i < kolejny_numer - 1; i++)//przewijam do poprzednika kolejnego telefonu
+				telefon *na_co_wskazuje_pierwszy = new telefon;
+				na_co_wskazuje_pierwszy = zamiana->wsk_nastepnika;
+				*adres_do_drugiej_funkcji = *najtanszy;
+				
+				telefon *kolejny_telefon = new telefon;
+				kolejny_telefon->cena = zamiana->cena;
+				kolejny_telefon->marka = zamiana->marka;
+				kolejny_telefon->model = zamiana->model;
+				kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;
+				
+				adres_do_drugiej_funkcji->wsk_nastepnika = na_co_wskazuje_pierwszy;//krok 1
+				zamiana = adres_do_drugiej_funkcji;
+				for (int i = 1; i < ktory_telefon_jest_najtanszy-1; i++)//to sie nei wykona w tym przypadku, ale niech bedzie
 				{
 					zamiana = zamiana->wsk_nastepnika;
 				}
-				if (zamiana->cena == kolejny_telefon->cena)//taki przypadek nastapi dla 4,1 bo ususniete zostana wszystkie przed kolejnym
-					*poczatek = *najtanszy;//krok 3 dla 4,1
-				else
-					zamiana->wsk_nastepnika = najtanszy;//krok 3 dla 1,4 zamiana tu to kruger, dla 4,1 to xiaomi
-				zamiana = poczatek;
+				cout <<" zamiana->model"<< zamiana->model;
+				zamiana->wsk_nastepnika = kolejny_telefon;//krok 2
 			}
-			else//normalny przypadek, gdy kolejny nie jest bezposrednio przed najtanszym
+			else
 			{
-				if (kolejny_numer> ktory_telefon_jest_najtanszy)//gdy kolejny jest za najtanszym
-				{
-					for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
-					{
-						zamiana = zamiana->wsk_nastepnika;
-					}
-					//cout << "zamiana->model" << zamiana->model;//do testow
-					zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
-					telefon *na_co_wskazuje_kolejny = new telefon;
-					na_co_wskazuje_kolejny = kolejny_telefon->wsk_nastepnika;
-					kolejny_telefon->wsk_nastepnika = najtanszy;//wykonano drugi krok
-					najtanszy->wsk_nastepnika = na_co_wskazuje_kolejny;//wykonano trzeci krok
 
-				}
-				else//gdy kolejny nie jest za najtanszym
+
+				//krok 1
+				for (int i = 1; i < kolejny_numer; i++)
 				{
-					for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
+					zamiana = zamiana->wsk_nastepnika;
+				}
+				telefon *kolejny_telefon = new telefon;
+				kolejny_telefon->cena = zamiana->cena;
+				kolejny_telefon->marka = zamiana->marka;
+				kolejny_telefon->model = zamiana->model;
+				kolejny_telefon->wsk_nastepnika = zamiana->wsk_nastepnika;
+				zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+
+
+
+				if (kolejny_numer + 1 == ktory_telefon_jest_najtanszy)//szczegolny przypadek, gdy kolejny jest bezposrednio przed najtanszym
+				{
+					//cout << "wystapil szczegolny przypadek,gdy kolejny jest bezposrednio przed najtanszym\n";//do testow
+					kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//krok 1
+					najtanszy->wsk_nastepnika = kolejny_telefon;//krok 2
+					for (int i = 1; i < kolejny_numer - 1; i++)//przewijam do poprzednika kolejnego telefonu
 					{
 						zamiana = zamiana->wsk_nastepnika;
 					}
-					//cout << "zamiana->model" << zamiana->model;//do testow
-					zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
-					/////////////////nastepny_po_kolejnym to telefon ktory jest nastepny w kolejce, zaraz po kolejnym telefonie
-					telefon *nastepny_po_kolejnym = new telefon;
-					if (kolejny_telefon->wsk_nastepnika != NULL)
-					{
-						nastepny_po_kolejnym->cena = kolejny_telefon->wsk_nastepnika->cena;
-						nastepny_po_kolejnym->marka = kolejny_telefon->wsk_nastepnika->marka;
-						nastepny_po_kolejnym->model = kolejny_telefon->wsk_nastepnika->model;
-						nastepny_po_kolejnym->wsk_nastepnika = kolejny_telefon->wsk_nastepnika->wsk_nastepnika;
-					}
+					if (zamiana->cena == kolejny_telefon->cena)//taki przypadek nastapi dla 4,1 bo ususniete zostana wszystkie przed kolejnym
+						*poczatek = *najtanszy;//krok 3 dla 4,1
 					else
-					{
-						nastepny_po_kolejnym->cena = NULL;
-						nastepny_po_kolejnym->marka = "";
-						nastepny_po_kolejnym->model = "";
-						nastepny_po_kolejnym->wsk_nastepnika = NULL;
-					}
-					/////////////////
-					zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-					for (int i = 1; i < kolejny_numer - 1; i++)
-					{
-						zamiana = zamiana->wsk_nastepnika;
-					}
-					zamiana->wsk_nastepnika = najtanszy;//wykonano drugi krok;
-					zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
-
-					kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//wykonano krok 3
-					najtanszy->wsk_nastepnika = nastepny_po_kolejnym;//wykonano krok 4
-					//cout << "zamiana->model" << zamiana->model;//do testow
+						zamiana->wsk_nastepnika = najtanszy;//krok 3 dla 1,4 zamiana tu to kruger, dla 4,1 to xiaomi
+					zamiana = poczatek;
 				}
+				else//normalny przypadek, gdy kolejny nie jest bezposrednio przed najtanszym
+				{
+					if (kolejny_numer > ktory_telefon_jest_najtanszy)//gdy kolejny jest za najtanszym
+					{
+						for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
+						{
+							zamiana = zamiana->wsk_nastepnika;
+						}
+						//cout << "zamiana->model" << zamiana->model;//do testow
+						zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
+						telefon *na_co_wskazuje_kolejny = new telefon;
+						na_co_wskazuje_kolejny = kolejny_telefon->wsk_nastepnika;
+						kolejny_telefon->wsk_nastepnika = najtanszy;//wykonano drugi krok
+						najtanszy->wsk_nastepnika = na_co_wskazuje_kolejny;//wykonano trzeci krok
 
+					}
+					else//gdy kolejny nie jest za najtanszym
+					{
+						for (int i = 1; i < ktory_telefon_jest_najtanszy - 1; i++)
+						{
+							zamiana = zamiana->wsk_nastepnika;
+						}
+						//cout << "zamiana->model" << zamiana->model;//do testow
+						zamiana->wsk_nastepnika = kolejny_telefon;//wykonany pierwszy krok
+						/////////////////nastepny_po_kolejnym to telefon ktory jest nastepny w kolejce, zaraz po kolejnym telefonie
+						telefon *nastepny_po_kolejnym = new telefon;
+						if (kolejny_telefon->wsk_nastepnika != NULL)
+						{
+							nastepny_po_kolejnym->cena = kolejny_telefon->wsk_nastepnika->cena;
+							nastepny_po_kolejnym->marka = kolejny_telefon->wsk_nastepnika->marka;
+							nastepny_po_kolejnym->model = kolejny_telefon->wsk_nastepnika->model;
+							nastepny_po_kolejnym->wsk_nastepnika = kolejny_telefon->wsk_nastepnika->wsk_nastepnika;
+						}
+						else
+						{
+							nastepny_po_kolejnym->cena = NULL;
+							nastepny_po_kolejnym->marka = "";
+							nastepny_po_kolejnym->model = "";
+							nastepny_po_kolejnym->wsk_nastepnika = NULL;
+						}
+						/////////////////
+						zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+						for (int i = 1; i < kolejny_numer - 1; i++)
+						{
+							zamiana = zamiana->wsk_nastepnika;
+						}
+						zamiana->wsk_nastepnika = najtanszy;//wykonano drugi krok;
+						zamiana = poczatek;//wracam na poczatek listy powstalej po usunieciu elementow
+
+						kolejny_telefon->wsk_nastepnika = najtanszy->wsk_nastepnika;//wykonano krok 3
+						najtanszy->wsk_nastepnika = nastepny_po_kolejnym;//wykonano krok 4
+						//cout << "zamiana->model" << zamiana->model;//do testow
+					}
+
+				}
 			}
 		}
 	}
@@ -584,7 +609,7 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 3;
+		int ile_usunac = 4;
 		int kolejny_numer = 1;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
