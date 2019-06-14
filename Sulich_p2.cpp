@@ -559,10 +559,10 @@ int main()
 {
 	//podpunkt 1
 	telefon *nowalista = new telefon();
-	/*cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
+	cout << "Wpisz nazwe pliku. Dane w pliku musza byc w formacie: marka model cena, i kazdy nastepny element listy ma byc w nastepnej linijce. Kursor pliku musi byc na koncu ostatniej zapelnionej linijki. \n";
 	string nazwapliku;
-	cin >> nazwapliku;*/
-string nazwapliku = "dane.txt";//do testow
+	cin >> nazwapliku;
+//string nazwapliku = "dane.txt";//do testow
 	ifstream plik(nazwapliku);
 	if (!plik.is_open())
 	{
@@ -584,8 +584,8 @@ string nazwapliku = "dane.txt";//do testow
 	plik.close();
 	if (plik_cena != NULL)
 	{
-		int ile_usunac = 3;
-		int kolejny_numer = 1;
+		int ile_usunac = 2;
+		int kolejny_numer = 3;
 		//cout << "w pliku byly " << ile_telefonow_w_pliku << " telefony";//do testow
 		drukuj_liste_it(nowalista);//podpunkt 2
 		string ciag_znakow = "Nok";
@@ -604,7 +604,6 @@ string nazwapliku = "dane.txt";//do testow
 			cout << "w trzecim podpunkcie drugiej funkcji nie bylo zamiany\n";		
 		}
 		cout << "lista po zrobieniu drugiej funkcji wyglada nastepujaco:";
-		cout << "\n\n ile_usunac =" << ile_usunac << ",kolejny_numer=" << kolejny_numer << "\n";//do testow
 
 		drukuj_liste_it(nowalista);
 		skasuj_liste(nowalista);//podpunkt 5
